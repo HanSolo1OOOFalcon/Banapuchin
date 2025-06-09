@@ -53,6 +53,7 @@ namespace Banapuchin.Main
             if (Player.Instance != null)
             {
                 Bouncy.normal = Player.Instance.climbDrag;
+                UltraBouncy.normal = Player.Instance.climbDrag;
                 this.enabled = false;
             }
         }

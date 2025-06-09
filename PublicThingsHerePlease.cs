@@ -57,5 +57,38 @@ namespace Banapuchin
                 return texture;
             }
         }
+
+        public static void CreateBanana(out GameObject banana, int segmentCount = 24, float arcRadius = 0.6f, float totalCurveAngle = 60f, float baseRadius = 0.1f, float segmentLength = 0.15f)
+        {
+            Color bananaYellow = new Color32(251, 255, 135, 255);
+            banana = new GameObject("Banana");
+
+            float angleStep = totalCurveAngle / (segmentCount - 1);
+
+            for (int i = 0; i < segmentCount; i++)
+            {
+                GameObject segment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                segment.name = $"Segment_{i}";
+                segment.transform.SetParent(banana.transform);
+
+                float angle = -totalCurveAngle / 2f + i * angleStep;
+                float rad = Mathf.Deg2Rad * angle;
+
+                float x = Mathf.Cos(rad) * arcRadius;
+                float y = Mathf.Sin(rad) * arcRadius;
+
+                segment.transform.localPosition = new Vector3(x, y, 0f);
+                segment.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+
+                float taper = Mathf.Lerp(0.4f, 1f, Mathf.Sin(Mathf.PI * i / segmentCount));
+                segment.transform.localScale = new Vector3(baseRadius * taper, segmentLength / 2f, baseRadius * taper);
+
+                Renderer r = segment.GetComponent<Renderer>();
+                r.material.shader = Shader.Find("Unlit/Color");
+                r.material.color = bananaYellow;
+
+                GameObject.Destroy(segment.GetComponent<Collider>());
+            }
+        }
     }
 }
