@@ -153,7 +153,7 @@ This License may only be modified by written agreement signed by the copyright h
 
 ## How to Apply This License
 
-To apply this License to your software, include the following notice in each source file:
+To apply this License to your software, include the following notice in any file containing source code:
 
 ```
 Copyright (c) 2025 HanSolo1000Falcon
