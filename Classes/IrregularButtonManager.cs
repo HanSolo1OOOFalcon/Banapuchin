@@ -1,0 +1,21 @@
+﻿using Banapuchin.Main;
+using System;
+using UnityEngine;
+
+namespace Banapuchin.Classes
+{
+    internal class IrregularButtonManager : BaseButtonManager
+    {
+        public Action SpecialAction = null;
+
+        public override void OnTriggerEnter(Collider other)
+        {
+            base.OnTriggerEnter(other);
+            if (isAllowed)
+            {
+                isAllowed = false;
+                SpecialAction?.Invoke(); // people suffering from pneumonoultramicroscopicsilicovolcanoconiosis are very sick i think idk but its like a bone sickness
+            }
+        }
+    }
+}

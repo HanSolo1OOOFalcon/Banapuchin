@@ -1,0 +1,75 @@
+﻿using Caputilla.Utils;
+using Banapuchin.Extensions;
+using UnityEngine;
+using Locomotion;
+using Banapuchin.Classes;
+
+namespace Banapuchin.Mods.Movement
+{
+    public class Platforms : ModBase
+    {
+        public override string Text => "Platforms";
+
+        public static GameObject lPlat, rPlat;
+        static bool lastGripLeft = false, lastGripRight = false;
+
+        public override void OnDisable()
+        {
+            if (lPlat != null)
+            {
+                lPlat.Obliterate(out lPlat);
+            }
+            if (rPlat != null)
+            {
+                rPlat.Obliterate(out rPlat);
+            }
+        }
+
+        static GameObject CreatePlat()
+        {
+            GameObject plat = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            plat.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Color");
+            plat.GetComponent<Renderer>().material.color = Color.white;
+            plat.transform.localScale = new Vector3(0.02f, 0.3f, 0.3f);
+            plat.SetActive(false);
+            return plat;
+        }
+
+        public override void OnEnable()
+        {
+            lPlat.Obliterate(out lPlat);
+            lPlat = CreatePlat();
+
+            rPlat.Obliterate(out rPlat);
+            rPlat = CreatePlat();
+        }
+
+        public override void Update()
+        {
+            if (ControllerInputManager.Instance.leftGrip && !lastGripLeft)
+            {
+                lPlat.SetActive(true);
+                lPlat.transform.position = Player.Instance.LeftHand.transform.position + Vector3.down * 0.1f;
+                lPlat.transform.rotation = Player.Instance.LeftHand.transform.rotation;
+            }
+            else if (!ControllerInputManager.Instance.leftGrip && lastGripLeft)
+            {
+                lPlat.SetActive(false);
+            }
+
+            if (ControllerInputManager.Instance.rightGrip && !lastGripRight)
+            {
+                rPlat.SetActive(true);
+                rPlat.transform.position = Player.Instance.RightHand.transform.position + Vector3.down * 0.1f;
+                rPlat.transform.rotation = Player.Instance.RightHand.transform.rotation;
+            }
+            else if (!ControllerInputManager.Instance.rightGrip && lastGripRight)
+            {
+                rPlat.SetActive(false);
+            }
+
+            lastGripRight = ControllerInputManager.Instance.rightGrip;
+            lastGripLeft = ControllerInputManager.Instance.leftGrip;
+        }
+    }
+}
