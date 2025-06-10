@@ -2,12 +2,16 @@
 using Banapuchin.Extensions;
 using Locomotion;
 using UnityEngine;
+using System.Collections.Generic;
+using Banapuchin.Mods.Gun;
+using System;
 
 namespace Banapuchin.Mods.Weird
 {
     public class Thirdperson : ModBase
     {
         public override string Text => "Third Person";
+        public override List<Type> Incompatibilities => new List<Type> { typeof(SpectateGun) };
 
         static GameObject cameraObj;
 
@@ -21,7 +25,7 @@ namespace Banapuchin.Mods.Weird
             cameraObj.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
             cameraObj.transform.localPosition = new Vector3(0f, 0f, -2f);
             cameraObj.transform.localRotation = Quaternion.identity;
-            Object.DontDestroyOnLoad(cameraObj);
+            UnityEngine.Object.DontDestroyOnLoad(cameraObj);
         }
 
         public override void OnDisable()

@@ -1,7 +1,9 @@
 ﻿using Banapuchin.Classes;
 using Banapuchin.Extensions;
 using Banapuchin.Libraries;
-using Locomotion;
+using Banapuchin.Mods.Weird;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Banapuchin.Mods.Gun
@@ -9,6 +11,7 @@ namespace Banapuchin.Mods.Gun
     public class SpectateGun : ModBase
     {
         public override string Text => "Spectate Gun";
+        public override List<Type> Incompatibilities => new List<Type> { typeof(Thirdperson) };
 
         static GunLibrary gun = new GunLibrary
         {
@@ -46,7 +49,7 @@ namespace Banapuchin.Mods.Gun
                         cameraObj.transform.SetParent(gun.selectedFusionPlayer.transform.Find("Head"));
                         cameraObj.transform.localPosition = Vector3.zero;
                         cameraObj.transform.localRotation = Quaternion.identity;
-                        Object.DontDestroyOnLoad(cameraObj);
+                        UnityEngine.Object.DontDestroyOnLoad(cameraObj);
                     }
                 }
             }
