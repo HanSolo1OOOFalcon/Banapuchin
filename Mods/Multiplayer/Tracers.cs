@@ -36,6 +36,7 @@ namespace Banapuchin.Mods.Multiplayer
 
         public override void OnDisable()
         {
+            base.OnDisable();
             foreach (LineRenderer tracer in tracers)
             {
                 if (tracer != null)

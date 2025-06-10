@@ -199,8 +199,6 @@ namespace Banapuchin.Main
             foreach (ModBase mod in modInstances)
             {
                 mod.OnDisable();
-                mod.ButtonObject.GetComponent<Renderer>().material.color = Color.white * 0.75f;
-                mod.isEnabled = false;
             }
             modInstances.Clear();
         }

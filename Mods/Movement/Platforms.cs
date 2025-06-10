@@ -15,6 +15,7 @@ namespace Banapuchin.Mods.Movement
 
         public override void OnDisable()
         {
+            base.OnDisable();
             if (lPlat != null)
             {
                 lPlat.Obliterate(out lPlat);
@@ -37,6 +38,7 @@ namespace Banapuchin.Mods.Movement
 
         public override void OnEnable()
         {
+            base.OnEnable();
             lPlat.Obliterate(out lPlat);
             lPlat = CreatePlat();
 

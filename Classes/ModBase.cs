@@ -12,8 +12,20 @@ namespace Banapuchin.Classes
 
         public virtual void Update() { }
         public virtual void FixedUpdate() { }
-        public virtual void OnEnable() { }
-        public virtual void OnDisable() { }
+        public virtual void OnEnable()
+        {
+            ButtonObject.GetComponent<Renderer>().material.color = Color.red;
+            Plugin.toInvoke.Add(Update);
+            Plugin.toInvokeFixed.Add(FixedUpdate);
+            ButtonObject.transform.localPosition = new Vector3(0.6f, ButtonObject.transform.localPosition.y, ButtonObject.transform.localPosition.z);
+        }
+        public virtual void OnDisable()
+        {
+            ButtonObject.GetComponent<Renderer>().material.color = Color.white * 0.75f;
+            Plugin.toInvoke.Remove(Update);
+            Plugin.toInvokeFixed.Remove(FixedUpdate);
+            ButtonObject.transform.localPosition = new Vector3(1f, ButtonObject.transform.localPosition.y, ButtonObject.transform.localPosition.z);
+        }
 
         public virtual List<Type> Incompatibilities { get; } = new List<Type>();
         public virtual List<Type> Dependencies { get; } = new List<Type>();
@@ -38,7 +50,7 @@ namespace Banapuchin.Classes
                         ModBase instance = PublicThingsHerePlease.modInstances.Find(m => m.GetType() == mod);
                         if (instance != null && instance.isEnabled)
                         {
-                            instance.Disable();
+                            instance.OnDisable();
                         }
                     }
                     else if (Dependencies.Contains(mod))
@@ -46,16 +58,16 @@ namespace Banapuchin.Classes
                         ModBase instance = PublicThingsHerePlease.modInstances.Find(m => m.GetType() == mod);
                         if (instance != null && !instance.isEnabled)
                         {
-                            instance.Enable();
+                            instance.OnEnable();
                         }
                     }
                 }
 
-                Enable();
+                OnEnable();
             }
             else
             {
-                Disable();
+                OnDisable();
 
                 List<Type> mods = new List<Type>();
                 foreach (ModBase mod in PublicThingsHerePlease.modInstances)
@@ -68,30 +80,12 @@ namespace Banapuchin.Classes
                     ModBase instance = PublicThingsHerePlease.modInstances.Find(m => m.GetType() == mod);
                     if (instance.Dependencies.Contains(this.GetType()) && instance.isEnabled)
                     {
-                        instance.Disable();
+                        instance.OnDisable();
                     }
                 }
             }
         }
-
-        public void Enable()
-        {
-            OnEnable();
-            ButtonObject.GetComponent<Renderer>().material.color = Color.red;
-            Plugin.toInvoke.Add(Update);
-            Plugin.toInvokeFixed.Add(FixedUpdate);
-            ButtonObject.transform.localPosition = new Vector3(0.6f, ButtonObject.transform.localPosition.y, ButtonObject.transform.localPosition.z);
-        }
-
-        public void Disable()
-        {
-            OnDisable();
-            ButtonObject.GetComponent<Renderer>().material.color = Color.white * 0.75f;
-            Plugin.toInvoke.Remove(Update);
-            Plugin.toInvokeFixed.Remove(FixedUpdate);
-            ButtonObject.transform.localPosition = new Vector3(1f, ButtonObject.transform.localPosition.y, ButtonObject.transform.localPosition.z);
-        }
-#endregion
+        #endregion
 
         // Do not assign these
         public GameObject ButtonObject = null;

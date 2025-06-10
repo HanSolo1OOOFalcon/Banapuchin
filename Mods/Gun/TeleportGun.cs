@@ -13,11 +13,13 @@ namespace Banapuchin.Mods.Gun
 
         public override void OnEnable()
         {
+            base.OnEnable();
             gun.OnEnable();
         }
 
         public override void OnDisable()
         {
+            base.OnDisable();
             gun.OnDisable();
         }
 

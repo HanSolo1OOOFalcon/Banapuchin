@@ -14,11 +14,13 @@ namespace Banapuchin.Mods.Movement
 
         public override void OnEnable()
         {
+            base.OnEnable();
             Player.Instance.climbDrag = 1f;
         }
 
         public override void OnDisable()
         {
+            base.OnDisable();
             Player.Instance.climbDrag = normal;
         }
     }

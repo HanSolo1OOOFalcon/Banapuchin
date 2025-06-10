@@ -14,6 +14,7 @@ namespace Banapuchin.Mods.Movement
 
         public override void OnDisable()
         {
+            base.OnDisable();
             HapticLibrary.instance.StopHaptics(false);
             HapticLibrary.instance.StopHaptics(true);
         }

@@ -20,11 +20,13 @@ namespace Banapuchin.Mods.Gun
 
         public override void OnEnable()
         {
+            base.OnEnable();
             gun.OnEnable();
         }
 
         public override void OnDisable()
         {
+            base.OnDisable();
             gun.OnDisable();
         }
 
@@ -41,11 +43,11 @@ namespace Banapuchin.Mods.Gun
                         Camera camera = cameraObj.AddComponent<Camera>();
                         camera.fieldOfView = 110f;
                         camera.nearClipPlane = 0.001f;
-                        cameraObj.transform.position = Player.Instance.playerCam.transform.position;
+                        cameraObj.transform.SetParent(gun.selectedFusionPlayer.transform.Find("Head"));
+                        cameraObj.transform.localPosition = Vector3.zero;
+                        cameraObj.transform.localRotation = Quaternion.identity;
                         Object.DontDestroyOnLoad(cameraObj);
                     }
-                    cameraObj.transform.position = gun.selectedFusionPlayer.transform.Find("Head").position;
-                    cameraObj.transform.rotation = gun.selectedFusionPlayer.transform.Find("Head").rotation;
                 }
             }
 

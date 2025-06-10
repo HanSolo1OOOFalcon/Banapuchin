@@ -15,6 +15,7 @@ namespace Banapuchin.Mods.Movement
 
         public override void OnEnable()
         {
+            base.OnEnable();
             PublicThingsHerePlease.CreateBanana(out checkpointObj);
             checkpointObj.transform.localScale = Vector3.one * 0.5f;
             checkpointObj.SetActive(false);
@@ -22,6 +23,7 @@ namespace Banapuchin.Mods.Movement
 
         public override void OnDisable()
         {
+            base.OnDisable();
             if (checkpointObj != null)
             {
                 checkpointObj.Obliterate(out checkpointObj);
