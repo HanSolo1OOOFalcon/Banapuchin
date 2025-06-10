@@ -5,6 +5,7 @@ using System.Reflection;
 using UnityEngine;
 using Banapuchin.Main;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2CppInterop.Runtime.Runtime;
 
 namespace Banapuchin
 {
@@ -58,6 +59,21 @@ namespace Banapuchin
             }
         }
 
+        // the following method will stay here as it saved me from a lot of headaches while monky figured out asset bundles but now that assetbundles are a thing this method is deprecated
+        // nvm isnt deprecated got the following error:
+        /*
+        [Error  :Il2CppInterop] During invoking native->managed trampoline
+        Exception: System.IO.FileNotFoundException: Could not load file or assembly 'MelonLoader, Version=0.6.4.0, Culture=neutral, PublicKeyToken=null'. Det går inte att hitta filen.
+        File name: 'MelonLoader, Version=0.6.4.0, Culture=neutral, PublicKeyToken=null'
+            at UnityEngine.Il2CppAssetBundle.LoadAsset[T](String name)
+            at Banapuchin.Main.Plugin.CreateMenu()
+            at Banapuchin.Main.Plugin.OnModdedJoin()
+            at Caputilla.CaputillaManager.InvokeModdedJoin()
+            at Caputilla.Utils.RoomUtils.OnJoin()
+            at CapuchinTemplate.Patches.FusionHubPatchesJoin.Postfix(FusionHub __instance)
+            at DMD<FusionHub::JoinedRoom>(FusionHub this, SessionInfo info)
+            at (il2cpp -> managed) JoinedRoom(IntPtr , IntPtr , Il2CppMethodInfo* )
+        */
         public static void CreateBanana(out GameObject banana, int segmentCount = 24, float arcRadius = 0.6f, float totalCurveAngle = 60f, float baseRadius = 0.1f, float segmentLength = 0.15f)
         {
             Color bananaYellow = new Color32(251, 255, 135, 255);

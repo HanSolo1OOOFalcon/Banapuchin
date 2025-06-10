@@ -10,6 +10,17 @@ using TMPro;
 using Caputilla.Utils;
 using System.Reflection;
 using System.Linq;
+using BepInEx;
+
+/*
+Copyright (c) 2025 HanSolo1000Falcon
+
+Licensed under the Anti-Malicious Use Software License (AMUSL) v1.0
+You may obtain a copy of the License at https://github.com/HanSolo1OOOFalcon/amusl-license
+
+This software is provided "as is" without warranty of any kind.
+Use for malicious purposes including game hacking is strictly prohibited.
+*/
 
 namespace Banapuchin.Main
 {
@@ -39,7 +50,7 @@ namespace Banapuchin.Main
             justacube.transform.localScale = Vector3.one;
             justacube.transform.position = new Vector3(-87.5209f, 1.9869f, 95.47171f);
             justacube.GetComponent<BoxCollider>().enabled = false;
-            justacube.SafelyAddComponent<Rigidbody>().isKinematic = false;
+            justacube.SafelyAddComponent<Rigidbody>().isKinematic = false; // så grisch, alldeles för grisch för mig
 
             menu = GameObject.CreatePrimitive(PrimitiveType.Cube);
             menu.name = "BanapuchinMenu";
@@ -160,6 +171,7 @@ namespace Banapuchin.Main
             foo.transform.localPosition = position;
             foo.transform.localRotation = rotation;
             foo.transform.localScale = scale;
+            Destroy(foo.GetComponent<Collider>());
 
             Texture2D fooTexture = LoadTexture(imagePath);
             Material fooMaterial = new Material(Shader.Find("Unlit/Texture"));
