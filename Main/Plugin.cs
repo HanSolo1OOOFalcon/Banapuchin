@@ -10,7 +10,6 @@ using TMPro;
 using Caputilla.Utils;
 using System.Reflection;
 using System.Linq;
-using BepInEx;
 
 /*
 Copyright (c) 2025 HanSolo1000Falcon
@@ -91,6 +90,7 @@ namespace Banapuchin.Main
             // butts (haha i said funneh word)
             var ModBaseType = typeof(ModBase);
             var Mods = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(ModBaseType)).ToArray();
+            Plugin.instance.WriteLine($"Loaded {Mods.Length} mods, if this seems incorrect then you fucked up. Maybe try inheriting from the class?", LogLevel.Warning);
 
             for (int buttonIndex = 0; buttonIndex < Mods.Length; buttonIndex++)
             {
@@ -190,17 +190,19 @@ namespace Banapuchin.Main
         void OnModdedLeave()
         {
             allowed = false;
-            if (justacube != null) justacube.Obliterate(out justacube); else WriteLine("Menu is null, cannot obliterate it", LogLevel.Warning);
-            if (rBall != null) rBall.Obliterate(out rBall); else WriteLine("Right ball is null, cannot obliterate it", LogLevel.Warning);
-            if (lBall != null) lBall.Obliterate(out lBall); else WriteLine("Left ball is null, cannot obliterate it", LogLevel.Warning);
+            justacube.Obliterate(out justacube);
+            rBall.Obliterate(out rBall);
+            lBall.Obliterate(out lBall);
 
             toInvoke.Clear();
+            toInvokeFixed.Clear();
             foreach (ModBase mod in modInstances)
             {
                 mod.OnDisable();
                 mod.ButtonObject.GetComponent<Renderer>().material.color = Color.white * 0.75f;
                 mod.isEnabled = false;
             }
+            modInstances.Clear();
         }
 
         static bool wasPressed;

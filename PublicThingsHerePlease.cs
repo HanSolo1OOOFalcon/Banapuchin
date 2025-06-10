@@ -1,11 +1,7 @@
 ﻿using Banapuchin.Classes;
 using System.Collections.Generic;
-using Il2CppSystem.IO;
 using System.Reflection;
 using UnityEngine;
-using Banapuchin.Main;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using Il2CppInterop.Runtime.Runtime;
 
 namespace Banapuchin
 {
@@ -84,7 +80,7 @@ namespace Banapuchin
             for (int i = 0; i < segmentCount; i++)
             {
                 GameObject segment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                segment.name = $"Segment_{i}";
+                segment.name = $"Segment_{i + 1}";
                 segment.transform.SetParent(banana.transform);
 
                 float angle = -totalCurveAngle / 2f + i * angleStep;

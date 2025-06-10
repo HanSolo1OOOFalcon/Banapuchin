@@ -21,7 +21,7 @@ namespace Banapuchin.Libraries
         {
             pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             pointer.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Color");
-            pointer.GetComponent<Renderer>().material.color = Color.white;
+            pointer.GetComponent<Renderer>().material.color = Color.white * 0.75f;
             GameObject.Destroy(pointer.GetComponent<SphereCollider>());
             pointer.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             pointer.SetActive(false);
@@ -30,7 +30,7 @@ namespace Banapuchin.Libraries
             line.startWidth = 0.01f;
             line.endWidth = 0.01f;
             line.material = new Material(Shader.Find("Unlit/Color"));
-            line.material.color = Color.white;
+            line.material.color = Color.white * 0.75f;
             line.positionCount = 2;
         }
 

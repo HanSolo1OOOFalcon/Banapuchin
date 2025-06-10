@@ -180,9 +180,6 @@
 		<Reference Include="UnityEngine.HotReloadModule">
 		  <HintPath>$(GameAssemblyPath)\UnityEngine.HotReloadModule.dll</HintPath>
 		</Reference>
-		<Reference Include="UnityEngine.Il2CppAssetBundleManager">
-		  <HintPath>..\..\..\..\..\..\Spel\Steam\steamapps\common\Capuchin\BepInEx\interop\UnityEngine.Il2CppAssetBundleManager.dll</HintPath>
-		</Reference>
 		<Reference Include="UnityEngine.ImageConversionModule">
 		  <HintPath>$(GameAssemblyPath)\UnityEngine.ImageConversionModule.dll</HintPath>
 		</Reference>

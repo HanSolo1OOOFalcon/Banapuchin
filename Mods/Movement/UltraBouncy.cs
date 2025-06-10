@@ -7,7 +7,7 @@ namespace Banapuchin.Mods.Movement
 {
     public class UltraBouncy : ModBase
     {
-        public override string Text => "Bouncy";
+        public override string Text => "Ultra Bouncy";
         public override List<Type> Incompatibilities => new List<Type> { typeof(Bouncy) };
 
         public static float normal;

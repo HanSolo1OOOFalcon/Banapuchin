@@ -29,7 +29,7 @@ namespace Banapuchin.Mods.Movement
         {
             GameObject plat = GameObject.CreatePrimitive(PrimitiveType.Cube);
             plat.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Color");
-            plat.GetComponent<Renderer>().material.color = Color.white;
+            plat.GetComponent<Renderer>().material.color = Color.white * 0.75f;
             plat.transform.localScale = new Vector3(0.02f, 0.3f, 0.3f);
             plat.SetActive(false);
             return plat;
