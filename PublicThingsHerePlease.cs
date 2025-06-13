@@ -1,5 +1,7 @@
 ﻿using Banapuchin.Classes;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using UnityEngine;
 
@@ -15,6 +17,8 @@ namespace Banapuchin
         public static int currentPage = 0;
 
         public static List<ModBase> modInstances = new List<ModBase>();
+
+        public static AssetBundle bundle;
 
         public static void UpdateButtons()
         {
@@ -55,21 +59,36 @@ namespace Banapuchin
             }
         }
 
+        public static AssetBundle LoadAssetBundle(string path)
+        {
+            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(path);
+
+            byte[] buffer;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+                buffer = ms.ToArray();
+            }
+
+            Il2CppSystem.IO.MemoryStream il2cppStream = new Il2CppSystem.IO.MemoryStream(buffer);
+
+            var assetBundle = AssetBundle.LoadFromStream(il2cppStream);
+
+            return assetBundle;
+        }
+
+        public static void FixShaders(GameObject obj, string shaderPath = "Shader Graphs/ShadedPiss")
+        {
+            foreach (var renderer in obj.GetComponentsInChildren<Renderer>(true))
+            {
+                foreach (var material in renderer.materials)
+                {
+                    material.shader = Shader.Find(shaderPath);
+                }
+            }
+        }
+
         // the following method will stay here as it saved me from a lot of headaches while monky figured out asset bundles but now that assetbundles are a thing this method is deprecated
-        // nvm isnt deprecated got the following error:
-        /*
-        [Error  :Il2CppInterop] During invoking native->managed trampoline
-        Exception: System.IO.FileNotFoundException: Could not load file or assembly 'MelonLoader, Version=0.6.4.0, Culture=neutral, PublicKeyToken=null'. Det går inte att hitta filen.
-        File name: 'MelonLoader, Version=0.6.4.0, Culture=neutral, PublicKeyToken=null'
-            at UnityEngine.Il2CppAssetBundle.LoadAsset[T](String name)
-            at Banapuchin.Main.Plugin.CreateMenu()
-            at Banapuchin.Main.Plugin.OnModdedJoin()
-            at Caputilla.CaputillaManager.InvokeModdedJoin()
-            at Caputilla.Utils.RoomUtils.OnJoin()
-            at CapuchinTemplate.Patches.FusionHubPatchesJoin.Postfix(FusionHub __instance)
-            at DMD<FusionHub::JoinedRoom>(FusionHub this, SessionInfo info)
-            at (il2cpp -> managed) JoinedRoom(IntPtr , IntPtr , Il2CppMethodInfo* )
-        */
         public static void CreateBanana(out GameObject banana, int segmentCount = 24, float arcRadius = 0.6f, float totalCurveAngle = 60f, float baseRadius = 0.1f, float segmentLength = 0.15f)
         {
             Color bananaYellow = new Color32(251, 255, 135, 255);

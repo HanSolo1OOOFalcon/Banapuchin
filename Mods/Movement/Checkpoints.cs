@@ -16,8 +16,11 @@ namespace Banapuchin.Mods.Movement
         public override void OnEnable()
         {
             base.OnEnable();
-            PublicThingsHerePlease.CreateBanana(out checkpointObj);
-            checkpointObj.transform.localScale = Vector3.one * 0.5f;
+            GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("Banana");
+            checkpointObj = GameObject.Instantiate(foo);
+            checkpointObj.name = "CheckpointBanana";
+            checkpointObj.transform.localScale = Vector3.one * 8f;
+            PublicThingsHerePlease.FixShaders(checkpointObj);
             checkpointObj.SetActive(false);
         }
 
@@ -37,7 +40,7 @@ namespace Banapuchin.Mods.Movement
             {
                 checkpointObj.SetActive(true);
                 checkpointObj.transform.position = Player.Instance.RightHand.transform.position;
-                checkpointObj.transform.rotation = Quaternion.Euler(0f, Player.Instance.RightHand.transform.rotation.eulerAngles.y, 90f);
+                checkpointObj.transform.rotation = Quaternion.Euler(0f, 0f, 270f);
             }
 
             if (ControllerInputManager.Instance.leftTrigger && !wasPressed2 && checkpointObj.activeSelf)

@@ -17,14 +17,14 @@ namespace Banapuchin.Classes
             ButtonObject.GetComponent<Renderer>().material.color = Color.red;
             Plugin.toInvoke.Add(Update);
             Plugin.toInvokeFixed.Add(FixedUpdate);
-            ButtonObject.transform.localPosition = new Vector3(0.6f, ButtonObject.transform.localPosition.y, ButtonObject.transform.localPosition.z);
+            ButtonObject.transform.localPosition = new Vector3(ButtonObject.transform.localPosition.x, -0.0002f, ButtonObject.transform.localPosition.z);
         }
         public virtual void OnDisable()
         {
             ButtonObject.GetComponent<Renderer>().material.color = Color.white * 0.75f;
             Plugin.toInvoke.Remove(Update);
             Plugin.toInvokeFixed.Remove(FixedUpdate);
-            ButtonObject.transform.localPosition = new Vector3(1f, ButtonObject.transform.localPosition.y, ButtonObject.transform.localPosition.z);
+            ButtonObject.transform.localPosition = new Vector3(ButtonObject.transform.localPosition.y, -0.0004f, ButtonObject.transform.localPosition.z);
         }
 
         public virtual List<Type> Incompatibilities { get; } = new List<Type>();

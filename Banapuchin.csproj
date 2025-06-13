@@ -14,10 +14,12 @@
 
 	<ItemGroup>
 	  <None Remove="Assets\Cats\MonkyCar.jpg" />
+	  <None Remove="Assets\modmenu" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <EmbeddedResource Include="Assets\Cats\MonkyCar.jpg" />
+	  <EmbeddedResource Include="Assets\modmenu" />
 	</ItemGroup>
 
 	<ItemGroup>

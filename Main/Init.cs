@@ -10,6 +10,8 @@ using Locomotion;
 using Banapuchin.Mods.Movement;
 using System.Reflection;
 using System.Linq;
+using System.IO;
+using static Banapuchin.PublicThingsHerePlease;
 
 namespace Banapuchin.Main
 {
@@ -48,12 +50,15 @@ namespace Banapuchin.Main
 
     public class OnInit : MonoBehaviour
     {
+        bool hasDone = false;
+        
         void Update()
         {
-            if (Player.Instance != null)
+            if (!hasDone && Player.Instance != null)
             {
                 Bouncy.normal = Player.Instance.climbDrag;
                 UltraBouncy.normal = Player.Instance.climbDrag;
+                hasDone = true;
                 this.enabled = false;
             }
         }

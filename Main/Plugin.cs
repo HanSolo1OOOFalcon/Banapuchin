@@ -10,6 +10,7 @@ using TMPro;
 using Caputilla.Utils;
 using System.Reflection;
 using System.Linq;
+using System.IO;
 
 /*
 Copyright (c) 2025 HanSolo1000Falcon
@@ -29,7 +30,6 @@ namespace Banapuchin.Main
         public void WriteLine(string text, LogLevel severity = LogLevel.Debug) => Init.initInstance.Log.Log(severity, text);
         public static List<Action> toInvoke = new List<Action>();
         public static List<Action> toInvokeFixed = new List<Action>();
-        static GameObject justacube;
 
         void Start()
         {
@@ -44,93 +44,79 @@ namespace Banapuchin.Main
             // boring and not cute whatsoever...
             if (menu != null) menu.Obliterate(out menu);
 
-            justacube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            justacube.name = "JustACube";
-            justacube.transform.localScale = Vector3.one;
-            justacube.transform.position = new Vector3(-87.5209f, 1.9869f, 95.47171f);
-            justacube.GetComponent<BoxCollider>().enabled = false;
-            justacube.SafelyAddComponent<Rigidbody>().isKinematic = false; // så grisch, alldeles för grisch för mig
-
-            menu = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            menu.name = "BanapuchinMenu";
-            menu.transform.SetParent(justacube.transform);
-            menu.transform.localScale = new Vector3(0.02f, 0.3f, 0.4f);
-            menu.transform.localPosition = Vector3.zero;
-            menu.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Color");
-            menu.GetComponent<Renderer>().material.color = new Color32(89, 48, 10, 255);
-            menu.GetComponent<BoxCollider>().isTrigger = true;
+            GameObject menuThing = bundle.LoadAsset<GameObject>("BanapuchinMenu");
+            menu = Instantiate(menuThing);
+            menu.transform.localScale = Vector3.one * 25f;
+            menu.AddComponent<Rigidbody>().isKinematic = false;
             menu.AddComponent<HoldableObject>();
+            FixShaders(menu);
+            menu.name = "BanapuchinModMenu";
 
+            // this shit way too formal yall know i dont follow suite
+            GameObject pageL = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            pageL.transform.SetParent(menu.transform);
+            pageL.transform.localScale = new Vector3(0.004f, 0.002f, 0.004f);
+            pageL.transform.localRotation = Quaternion.identity;
+            pageL.transform.localPosition = new Vector3(0.004f, 0f, 0.012f);
+            pageL.GetComponent<BoxCollider>().isTrigger = true;
+            pageL.AddComponent<IrregularButtonManager>().SpecialAction = () => IrregularButtonMethods.LastPage();
 
-            CreateBanana(out GameObject banana);
-            banana.transform.SetParent(justacube.transform);
-            banana.transform.localPosition = new Vector3(0f, 0f, -0.05f);
-            banana.transform.localRotation = Quaternion.Euler(0f, 270f, 0f);
-            banana.transform.localScale = Vector3.one * 0.5f;
-
-            GameObject pageLeft = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            pageLeft.name = "PageLeft";
-            pageLeft.transform.SetParent(menu.transform);
-            pageLeft.transform.localPosition = new Vector3(-0.35f, 0f, 0.65f);
-            pageLeft.transform.localScale = new Vector3(0.3f, 1f, 0.3f);
-            pageLeft.GetComponent<BoxCollider>().isTrigger = true;
-            pageLeft.AddComponent<IrregularButtonManager>().SpecialAction = IrregularButtonMethods.LastPage;
-
-            GameObject pageRight = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            pageRight.name = "PageRight";
-            pageRight.transform.SetParent(menu.transform);
-            pageRight.transform.localPosition = new Vector3(0.35f, 0f, 0.65f);
-            pageRight.transform.localScale = new Vector3(0.3f, 1f, 0.3f);
-            pageRight.GetComponent<BoxCollider>().isTrigger = true;
-            pageRight.AddComponent<IrregularButtonManager>().SpecialAction = IrregularButtonMethods.NextPage;
+            GameObject pageR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            pageR.transform.SetParent(menu.transform);
+            pageR.transform.localScale = new Vector3(0.004f, 0.002f, 0.004f);
+            pageR.transform.localRotation = Quaternion.identity;
+            pageR.transform.localPosition = new Vector3(-0.004f, 0f, 0.012f);
+            pageR.GetComponent<BoxCollider>().isTrigger = true;
+            pageR.AddComponent<IrregularButtonManager>().SpecialAction = () => IrregularButtonMethods.NextPage();
 
             // SUPER CUTE CAT IMAGES YAYAYAYAYAYAYAYAYAYAYAY
-            LoadImageInto3DWorldSpace("Banapuchin.Assets.Cats.MonkyCar.jpg", menu.transform, new Vector3(-0.501f, 0f, 0f), Quaternion.Euler(0f, 90f, 90f), Vector3.one * 0.7f);
+            LoadImageInto3DWorldSpace("Banapuchin.Assets.Cats.MonkyCar.jpg", menu.transform, new Vector3(0f, 0.0019f, 0f), Quaternion.Euler(90f, 0f, 0f), Vector3.one * 0.01f);
 
             // butts (haha i said funneh word)
             var ModBaseType = typeof(ModBase);
             var Mods = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(ModBaseType)).ToArray();
             Plugin.instance.WriteLine($"Loaded {Mods.Length} mods, if this seems incorrect then you fucked up. Maybe try inheriting from the class?", LogLevel.Warning);
+            GameObject buttonPrefab = bundle.LoadAsset<GameObject>("BanapuchinButton");
 
             for (int buttonIndex = 0; buttonIndex < Mods.Length; buttonIndex++)
             {
-                float offset = 0.2f * (buttonIndex % 5);
+                float offset = 0.003f * (buttonIndex % 5);
 
                 Type modType = Mods[buttonIndex];
                 ModBase instance = (ModBase)Activator.CreateInstance(modType);
 
                 modInstances.Add(instance);
 
-                CreateButton(offset, instance);
+                CreateButton(offset, instance, buttonPrefab);
             }
             UpdateButtons();
         }
 
-        static void CreateButton(float offset, ModBase instance)
+        static void CreateButton(float offset, ModBase instance, GameObject toInstantiatte)
         {
-            GameObject button = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject button = Instantiate(toInstantiatte);
             button.transform.SetParent(menu.transform);
             button.name = instance.Text;
-            button.transform.localRotation = Quaternion.identity;
-            button.transform.localScale = new Vector3(0.9f, 0.9f, 0.15f);
-            button.transform.localPosition = new Vector3(1f, 0f, 0.4f - offset);
+            button.transform.localRotation = Quaternion.Euler(90f, 90f, 0f);
+            button.transform.localScale = Vector3.one * 0.12f;
+            button.transform.localPosition = new Vector3(0f, -0.0004f, 0.0065f - offset);
             button.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Color");
             button.GetComponent<Renderer>().material.color = Color.white * 0.75f;
-            button.GetComponent<BoxCollider>().isTrigger = true;
+            button.AddComponent<BoxCollider>().isTrigger = true;
 
             ButtonManager buttonManager = button.AddComponent<ButtonManager>();
             buttonManager.modInstance = instance;
 
             instance.ButtonObject = button;
-            instance.TextObject = CreateTextLabel(instance.Text, button.transform, 1f);
+            instance.TextObject = CreateTextLabel(instance.Text, button.transform, new Vector3(0f, 0f, 0.007f), Quaternion.Euler(0f, 180f, 270f), 0.125f);
         }
 
-        private static GameObject CreateTextLabel(string text, Transform parent, float size = 2f)
+        private static GameObject CreateTextLabel(string text, Transform parent, Vector3 pos, Quaternion rot, float size)
         {
             GameObject gameObject = new GameObject("TMP_" + text);
-            gameObject.transform.SetParent(parent.parent);
-            gameObject.transform.localPosition = new Vector3(parent.localPosition.x + 0.501f, parent.localPosition.y, parent.localPosition.z);
-            gameObject.transform.localRotation = Quaternion.Euler(180f, 90f, 90f);
+            gameObject.transform.SetParent(parent);
+            gameObject.transform.localPosition = pos;
+            gameObject.transform.localRotation = rot;
             gameObject.transform.localScale = Vector3.one;
 
             TextMeshPro tmp = gameObject.AddComponent<TextMeshPro>();
@@ -183,6 +169,7 @@ namespace Banapuchin.Main
         void OnModdedJoin()
         {
             allowed = true;
+            bundle = LoadAssetBundle("Banapuchin.Assets.modmenu");
             CreateMenu();
             CreateBalls();
         }
@@ -190,7 +177,7 @@ namespace Banapuchin.Main
         void OnModdedLeave()
         {
             allowed = false;
-            justacube.Obliterate(out justacube);
+            menu.Obliterate(out menu);
             rBall.Obliterate(out rBall);
             lBall.Obliterate(out lBall);
 
@@ -201,20 +188,22 @@ namespace Banapuchin.Main
                 mod.OnDisable();
             }
             modInstances.Clear();
+            bundle?.Unload(false);
         }
 
         static bool wasPressed;
         void Update()
         {
-            if (!allowed) return;
+            if (!allowed) 
+                return;
 
             if (ControllerInputManager.Instance.rightSecondary && !wasPressed)
             {
-                justacube.GetComponent<Rigidbody>().isKinematic = true;
-                justacube.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
-                justacube.transform.localPosition = new Vector3(0f, -0.04f, 0.6f);
-                justacube.transform.localRotation = Quaternion.Euler(270f, 90f, 0f);
-                justacube.SetActive(true);
+                menu.GetComponent<Rigidbody>().isKinematic = true;
+                menu.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
+                menu.transform.localPosition = new Vector3(0f, -0.04f, 0.6f);
+                menu.transform.localRotation = Quaternion.Euler(270f, 180f, 0f);
+                menu.SetActive(true);
             }
             wasPressed = ControllerInputManager.Instance.rightSecondary;
 
@@ -226,7 +215,8 @@ namespace Banapuchin.Main
 
         void FixedUpdate()
         {
-            if (!allowed) return;
+            if (!allowed) 
+                return;
             foreach (Action action in toInvokeFixed)
             {
                 action.Invoke();

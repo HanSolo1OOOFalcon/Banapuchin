@@ -29,9 +29,16 @@ namespace Banapuchin.Mods.Movement
         static GameObject CreatePlat()
         {
             GameObject plat = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            plat.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Color");
-            plat.GetComponent<Renderer>().material.color = Color.white * 0.75f;
             plat.transform.localScale = new Vector3(0.02f, 0.3f, 0.3f);
+            plat.transform.position = new Vector3(-84f, 2f, 95f);
+
+            GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("Banana");
+            GameObject nanner = GameObject.Instantiate(foo);
+            nanner.transform.SetParent(plat.transform);
+            nanner.transform.localPosition = Vector3.zero;
+            nanner.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            nanner.transform.localScale = Vector3.one;
+
             plat.SetActive(false);
             return plat;
         }
