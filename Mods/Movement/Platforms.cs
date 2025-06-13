@@ -28,17 +28,11 @@ namespace Banapuchin.Mods.Movement
 
         static GameObject CreatePlat()
         {
-            GameObject plat = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            plat.transform.localScale = new Vector3(0.02f, 0.3f, 0.3f);
-            plat.transform.position = new Vector3(-84f, 2f, 95f);
-
-            GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("Banana");
-            GameObject nanner = GameObject.Instantiate(foo);
-            nanner.transform.SetParent(plat.transform);
-            nanner.transform.localPosition = Vector3.zero;
-            nanner.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
-            nanner.transform.localScale = Vector3.one;
-
+            GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("CapuchinHead");
+            GameObject plat = GameObject.Instantiate(foo);
+            plat.transform.localScale = Vector3.one * 100f;
+            plat.AddComponent<BoxCollider>();
+            PublicThingsHerePlease.FixShaders(plat);
             plat.SetActive(false);
             return plat;
         }
@@ -58,7 +52,7 @@ namespace Banapuchin.Mods.Movement
             if (ControllerInputManager.Instance.leftGrip && !lastGripLeft)
             {
                 lPlat.SetActive(true);
-                lPlat.transform.position = Player.Instance.LeftHand.transform.position + Vector3.down * 0.1f;
+                lPlat.transform.position = Player.Instance.LeftHand.transform.position + Vector3.down * 0.2f;
                 lPlat.transform.rotation = Player.Instance.LeftHand.transform.rotation;
             }
             else if (!ControllerInputManager.Instance.leftGrip && lastGripLeft)
@@ -69,7 +63,7 @@ namespace Banapuchin.Mods.Movement
             if (ControllerInputManager.Instance.rightGrip && !lastGripRight)
             {
                 rPlat.SetActive(true);
-                rPlat.transform.position = Player.Instance.RightHand.transform.position + Vector3.down * 0.1f;
+                rPlat.transform.position = Player.Instance.RightHand.transform.position + Vector3.down * 0.2f;
                 rPlat.transform.rotation = Player.Instance.RightHand.transform.rotation;
             }
             else if (!ControllerInputManager.Instance.rightGrip && lastGripRight)
