@@ -211,6 +211,8 @@ namespace Banapuchin.Main
                 menu.transform.localPosition = new Vector3(0f, -0.04f, 0.6f);
                 menu.transform.localRotation = Quaternion.Euler(270f, 180f, 0f);
                 menu.transform.localScale = Vector3.one * 25f;
+                lBall.SetActive(true);
+                rBall.SetActive(true);
                 menu.SetActive(true);
             }
             wasPressed = ControllerInputManager.Instance.rightSecondary;

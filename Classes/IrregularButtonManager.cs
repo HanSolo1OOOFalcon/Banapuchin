@@ -7,6 +7,12 @@ namespace Banapuchin.Classes
     internal class IrregularButtonManager : BaseButtonManager
     {
         public Action SpecialAction = null;
+        AudioSource clickSound;
+
+        void Start()
+        {
+            clickSound = GetComponent<AudioSource>();
+        }
 
         protected override void OnTriggerEnter(Collider other)
         {
