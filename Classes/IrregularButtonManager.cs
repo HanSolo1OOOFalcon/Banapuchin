@@ -20,6 +20,7 @@ namespace Banapuchin.Classes
             if (isAllowed)
             {
                 isAllowed = false;
+                clickSound.Play();
                 SpecialAction?.Invoke(); // people suffering from pneumonoultramicroscopicsilicovolcanoconiosis are very sick i think idk but its like a bone sickness
             }
         }
