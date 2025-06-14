@@ -10,7 +10,6 @@ using TMPro;
 using Caputilla.Utils;
 using System.Reflection;
 using System.Linq;
-using System.IO;
 
 /*
 Copyright (c) 2025 HanSolo1000Falcon
@@ -77,6 +76,7 @@ namespace Banapuchin.Main
             var Mods = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(ModBaseType)).ToArray();
             Plugin.instance.WriteLine($"Loaded {Mods.Length} mods, if this seems incorrect then you fucked up. Maybe try inheriting from the class?", LogLevel.Warning);
             GameObject buttonPrefab = bundle.LoadAsset<GameObject>("BanapuchinButton");
+            AudioClip clickSound = bundle.LoadAsset<AudioClip>("ButtonPressWood");
 
             for (int buttonIndex = 0; buttonIndex < Mods.Length; buttonIndex++)
             {
@@ -87,14 +87,14 @@ namespace Banapuchin.Main
 
                 modInstances.Add(instance);
 
-                CreateButton(offset, instance, buttonPrefab);
+                CreateButton(offset, instance, buttonPrefab, clickSound);
             }
             UpdateButtons();
         }
 
-        static void CreateButton(float offset, ModBase instance, GameObject toInstantiatte)
+        static void CreateButton(float offset, ModBase instance, GameObject toInstantiate, AudioClip clickSound)
         {
-            GameObject button = Instantiate(toInstantiatte);
+            GameObject button = Instantiate(toInstantiate);
             button.transform.SetParent(menu.transform);
             button.name = instance.Text;
             button.transform.localRotation = Quaternion.Euler(90f, 90f, 0f);
@@ -103,6 +103,8 @@ namespace Banapuchin.Main
             button.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Color");
             button.GetComponent<Renderer>().material.color = Color.white * 0.75f;
             button.AddComponent<BoxCollider>().isTrigger = true;
+
+            button.AddComponent<AudioSource>().clip = clickSound;
 
             ButtonManager buttonManager = button.AddComponent<ButtonManager>();
             buttonManager.modInstance = instance;
@@ -169,7 +171,6 @@ namespace Banapuchin.Main
         void OnModdedJoin()
         {
             allowed = true;
-            bundle = LoadAssetBundle("Banapuchin.Assets.modmenu");
             CreateMenu();
             CreateBalls();
         }
@@ -188,7 +189,7 @@ namespace Banapuchin.Main
                 mod.OnDisable();
             }
             modInstances.Clear();
-            bundle?.Unload(false);
+
         }
 
         static bool wasPressed;
@@ -203,6 +204,7 @@ namespace Banapuchin.Main
                 menu.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
                 menu.transform.localPosition = new Vector3(0f, -0.04f, 0.6f);
                 menu.transform.localRotation = Quaternion.Euler(270f, 180f, 0f);
+                menu.transform.localScale = Vector3.one * 25f;
                 menu.SetActive(true);
             }
             wasPressed = ControllerInputManager.Instance.rightSecondary;

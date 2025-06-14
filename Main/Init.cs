@@ -58,8 +58,8 @@ namespace Banapuchin.Main
             {
                 Bouncy.normal = Player.Instance.climbDrag;
                 UltraBouncy.normal = Player.Instance.climbDrag;
+                bundle = LoadAssetBundle("Banapuchin.Assets.modmenu");
                 hasDone = true;
-                this.enabled = false;
             }
         }
     }

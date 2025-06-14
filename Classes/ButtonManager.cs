@@ -8,14 +8,21 @@ namespace Banapuchin.Classes
     public class ButtonManager : BaseButtonManager
     {
         public ModBase modInstance = null;
+        AudioSource audio;
 
-        public override void OnTriggerEnter(Collider other)
+        void Start()
+        {
+            audio = GetComponent<AudioSource>();
+        }
+        
+        protected override void OnTriggerEnter(Collider other)
         {
             base.OnTriggerEnter(other);
             if (isAllowed)
             {
                 isAllowed = false;
                 modInstance.Toggle();
+                audio.Play();
             }
         }
     }

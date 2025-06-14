@@ -8,7 +8,7 @@ namespace Banapuchin.Classes
     {
         public Action SpecialAction = null;
 
-        public override void OnTriggerEnter(Collider other)
+        protected override void OnTriggerEnter(Collider other)
         {
             base.OnTriggerEnter(other);
             if (isAllowed)

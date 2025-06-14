@@ -2,12 +2,15 @@
 using Banapuchin.Classes;
 using Locomotion;
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 namespace Banapuchin.Mods.Movement
 {
     public class Fly : ModBase
     {
         public override string Text => "Fly";
+        public override List<Type> Incompatibilities => new List<Type> { typeof(OtherFly) };
 
         public override void FixedUpdate()
         {
