@@ -15,7 +15,7 @@ namespace Banapuchin.Mods.Multiplayer
                 if (player.IsLocalPlayer)
                     continue;
 
-                player.skin.material.color = new Color(player.currentColor.x, player.currentColor.y, player.currentColor.z, 1f);
+                player.skin.material.color = Color.white * 0.75f;
                 player.skin.material.shader = Shader.Find("GUI/Text Shader");
             }
         }

@@ -24,6 +24,7 @@ namespace Banapuchin.Mods.Movement
             Vector3 velo = inputs.x * right + inputs.y * forward + inputs.z * Vector3.up;
             velo *= 15f;
             Player.Instance.playerRigidbody.velocity = velo;
+            Player.Instance.playerRigidbody.AddForce(-Physics.gravity * Player.Instance.playerRigidbody.mass * Player.Instance.scale);
         }
     }
 }
