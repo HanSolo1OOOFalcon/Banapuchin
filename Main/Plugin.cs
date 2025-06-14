@@ -51,12 +51,16 @@ namespace Banapuchin.Main
             FixShaders(menu);
             menu.name = "BanapuchinModMenu";
 
+            AudioClip clickSound = bundle.LoadAsset<AudioClip>("ButtonPressWood");
+
             // this shit way too formal yall know i dont follow suite
             GameObject pageL = GameObject.CreatePrimitive(PrimitiveType.Cube);
             pageL.transform.SetParent(menu.transform);
             pageL.transform.localScale = new Vector3(0.004f, 0.002f, 0.004f);
             pageL.transform.localRotation = Quaternion.identity;
             pageL.transform.localPosition = new Vector3(0.004f, 0f, 0.012f);
+            pageL.AddComponent<AudioSource>().clip = clickSound;
+            pageL.GetComponent<AudioSource>().playOnAwake = false;
             pageL.GetComponent<BoxCollider>().isTrigger = true;
             pageL.AddComponent<IrregularButtonManager>().SpecialAction = () => IrregularButtonMethods.LastPage();
 
@@ -65,6 +69,8 @@ namespace Banapuchin.Main
             pageR.transform.localScale = new Vector3(0.004f, 0.002f, 0.004f);
             pageR.transform.localRotation = Quaternion.identity;
             pageR.transform.localPosition = new Vector3(-0.004f, 0f, 0.012f);
+            pageR.AddComponent<AudioSource>().clip = clickSound;
+            pageR.GetComponent<AudioSource>().playOnAwake = false;
             pageR.GetComponent<BoxCollider>().isTrigger = true;
             pageR.AddComponent<IrregularButtonManager>().SpecialAction = () => IrregularButtonMethods.NextPage();
 
@@ -76,7 +82,6 @@ namespace Banapuchin.Main
             var Mods = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(ModBaseType)).ToArray();
             Plugin.instance.WriteLine($"Loaded {Mods.Length} mods, if this seems incorrect then you fucked up. Maybe try inheriting from the class?", LogLevel.Warning);
             GameObject buttonPrefab = bundle.LoadAsset<GameObject>("BanapuchinButton");
-            AudioClip clickSound = bundle.LoadAsset<AudioClip>("ButtonPressWood");
 
             for (int buttonIndex = 0; buttonIndex < Mods.Length; buttonIndex++)
             {
@@ -105,6 +110,7 @@ namespace Banapuchin.Main
             button.AddComponent<BoxCollider>().isTrigger = true;
 
             button.AddComponent<AudioSource>().clip = clickSound;
+            button.GetComponent<AudioSource>().playOnAwake = false;
 
             ButtonManager buttonManager = button.AddComponent<ButtonManager>();
             buttonManager.modInstance = instance;
@@ -208,6 +214,12 @@ namespace Banapuchin.Main
                 menu.SetActive(true);
             }
             wasPressed = ControllerInputManager.Instance.rightSecondary;
+
+            if (!menu.GetComponent<Rigidbody>().isKinematic)
+            {
+                lBall.SetActive(false);
+                rBall.SetActive(false);
+            }
 
             foreach (Action action in toInvoke)
             {
