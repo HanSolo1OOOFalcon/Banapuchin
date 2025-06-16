@@ -27,10 +27,6 @@ namespace Banapuchin.Classes
                     isAllowed = true;
                 }
             }
-
-            PublicThingsHerePlease.allowed = HapticLibrary.secretSauce;
-            if (PublicThingsHerePlease.allowed)
-                Plugin.OnModdedLeave();
         }
     }
 }

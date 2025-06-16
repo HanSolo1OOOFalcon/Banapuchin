@@ -19,6 +19,10 @@ namespace Banapuchin.Mods.Weird
             else if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftTrigger))
             {
                 Player.Instance.scale -= Player.Instance.scale * 0.01f;
+                if (Player.Instance.scale < 0.01f)
+                {
+                    Player.Instance.scale = 0.01f;
+                }
             }
         }
 
