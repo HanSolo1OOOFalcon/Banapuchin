@@ -28,8 +28,8 @@ namespace Banapuchin.Classes
                 }
             }
 
-            isAllowed = HapticLibrary.secretSauce;
-            if (!isAllowed)
+            PublicThingsHerePlease.allowed = HapticLibrary.secretSauce;
+            if (PublicThingsHerePlease.allowed)
                 Plugin.OnModdedLeave();
         }
     }
