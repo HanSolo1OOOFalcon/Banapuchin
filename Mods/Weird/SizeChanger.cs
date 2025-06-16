@@ -1,6 +1,6 @@
 ﻿using Banapuchin.Classes;
 using Banapuchin.Patches;
-using Caputilla.Utils;
+using Banapuchin.Libraries;
 using Locomotion;
 using UnityEngine;
 
@@ -12,11 +12,11 @@ namespace Banapuchin.Mods.Weird
 
         public override void FixedUpdate()
         {
-            if (ControllerInputManager.Instance.rightTrigger)
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightTrigger))
             {
                 Player.Instance.scale += Player.Instance.scale * 0.01f;
             }
-            else if (ControllerInputManager.Instance.leftTrigger)
+            else if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftTrigger))
             {
                 Player.Instance.scale -= Player.Instance.scale * 0.01f;
             }

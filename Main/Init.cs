@@ -37,6 +37,8 @@ namespace Banapuchin.Main
             pluginInstance = AddComponent<Plugin>();
             AddComponent<OnInit>();
             AddComponent<HapticLibrary>();
+            AddComponent<CoroutineManager>();
+            AddComponent<ControllerInput>();
         }
 
         public override bool Unload()

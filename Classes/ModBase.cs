@@ -49,6 +49,7 @@ namespace Banapuchin.Classes
                         if (instance != null && instance.isEnabled)
                         {
                             instance.OnDisable();
+                            instance.isEnabled = false;
                         }
                     }
                     else if (Dependencies.Contains(mod))
@@ -57,6 +58,7 @@ namespace Banapuchin.Classes
                         if (instance != null && !instance.isEnabled)
                         {
                             instance.OnEnable();
+                            instance.isEnabled = true;
                         }
                     }
                 }

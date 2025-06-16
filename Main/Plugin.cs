@@ -7,9 +7,9 @@ using static Banapuchin.PublicThingsHerePlease;
 using Locomotion;
 using Banapuchin.Classes;
 using TMPro;
-using Caputilla.Utils;
 using System.Reflection;
 using System.Linq;
+using Banapuchin.Libraries;
 
 /*
 Copyright (c) 2025 HanSolo1000Falcon
@@ -174,14 +174,14 @@ namespace Banapuchin.Main
             foo.GetComponent<MeshRenderer>().material = fooMaterial;
         }
 
-        void OnModdedJoin()
+        public static void OnModdedJoin()
         {
             allowed = true;
             CreateMenu();
             CreateBalls();
         }
 
-        void OnModdedLeave()
+        public static void OnModdedLeave()
         {
             allowed = false;
             menu.Obliterate(out menu);
@@ -204,7 +204,7 @@ namespace Banapuchin.Main
             if (!allowed) 
                 return;
 
-            if (ControllerInputManager.Instance.rightSecondary && !wasPressed)
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightSecondaryButton) && !wasPressed)
             {
                 menu.GetComponent<Rigidbody>().isKinematic = true;
                 menu.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
@@ -215,7 +215,7 @@ namespace Banapuchin.Main
                 rBall.SetActive(true);
                 menu.SetActive(true);
             }
-            wasPressed = ControllerInputManager.Instance.rightSecondary;
+            wasPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.rightSecondaryButton);
 
             if (!menu.GetComponent<Rigidbody>().isKinematic)
             {

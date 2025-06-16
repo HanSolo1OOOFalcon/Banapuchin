@@ -1,6 +1,8 @@
 ﻿using Banapuchin.Classes;
-using Caputilla.Utils;
+using Banapuchin.Libraries;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 using Locomotion;
+using System.Collections;
 using UnityEngine;
 
 namespace Banapuchin.Mods.Weird
@@ -10,22 +12,33 @@ namespace Banapuchin.Mods.Weird
         public override string Text => "Backflip";
 
         static bool wasPressed;
+
         public override void FixedUpdate()
         {
-            if (ControllerInputManager.Instance.rightPrimary)
+            bool rightPrimary = ControllerInput.instance.GetInput(ControllerInput.InputType.rightPrimaryButton);
+
+            if (rightPrimary)
             {
                 if (!wasPressed)
                 {
                     wasPressed = true;
-                    for (int i = 0; i < 360; i++)
-                    {
-                        Player.Instance.transform.Rotate(Vector3.right, 1, Space.Self);
-                    }
+                    CoroutineManager.instance.StartCoroutine(BackFlipCoroutine().WrapToIl2Cpp());
                 }
             }
             else
             {
                 wasPressed = false;
+            }
+        }
+
+        private IEnumerator BackFlipCoroutine()
+        {
+            int i = 0;
+            while (i < 360)
+            {
+                Player.Instance.transform.Rotate(-Player.Instance.transform.forward, 1, Space.Self);
+                i++;
+                yield return new WaitForSeconds(0.25f/360f);
             }
         }
     }

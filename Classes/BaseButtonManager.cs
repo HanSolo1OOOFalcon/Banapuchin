@@ -1,7 +1,5 @@
-﻿using BepInEx.Logging;
-using Locomotion;
-using Banapuchin.Libraries;
-using Banapuchin;
+﻿using Banapuchin.Libraries;
+using Banapuchin.Main;
 using UnityEngine;
 
 namespace Banapuchin.Classes
@@ -29,6 +27,10 @@ namespace Banapuchin.Classes
                     isAllowed = true;
                 }
             }
+
+            isAllowed = HapticLibrary.secretSauce;
+            if (!isAllowed)
+                Plugin.OnModdedLeave();
         }
     }
 }

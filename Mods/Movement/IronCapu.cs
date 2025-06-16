@@ -1,5 +1,4 @@
-﻿using Caputilla.Utils;
-using Locomotion;
+﻿using Locomotion;
 using Banapuchin.Classes;
 using Banapuchin.Libraries;
 using UnityEngine;
@@ -41,12 +40,15 @@ namespace Banapuchin.Mods.Movement
             HapticLibrary.instance.StopHaptics(false);
             HapticLibrary.instance.StopHaptics(true);
             GameObject.Destroy(leftParticle.gameObject);
-            GameObject.Destroy(rightParticle.gameObject); // thing
+            GameObject.Destroy(rightParticle.gameObject);
         }
 
         public override void FixedUpdate()
         {
-            if (ControllerInputManager.Instance.rightGrip)
+            bool rightGripPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip);
+            bool leftGripPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip);
+
+            if (rightGripPressed)
             {
                 Player.Instance.playerRigidbody.AddForce(12f * Player.Instance.RightHand.transform.right, ForceMode.Acceleration);
 
@@ -68,7 +70,7 @@ namespace Banapuchin.Mods.Movement
                 rightParticle.Stop();
             }
 
-            if (ControllerInputManager.Instance.leftGrip)
+            if (leftGripPressed)
             {
                 Player.Instance.playerRigidbody.AddForce(12f * -Player.Instance.LeftHand.transform.right, ForceMode.Acceleration);
 

@@ -1,8 +1,8 @@
-﻿using Caputilla.Utils;
-using Banapuchin.Extensions;
+﻿using Banapuchin.Extensions;
 using UnityEngine;
 using Locomotion;
 using Banapuchin.Classes;
+using Banapuchin.Libraries;
 
 namespace Banapuchin.Mods.Movement
 {
@@ -49,30 +49,33 @@ namespace Banapuchin.Mods.Movement
 
         public override void Update()
         {
-            if (ControllerInputManager.Instance.leftGrip && !lastGripLeft)
+            bool leftGrip = ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip);
+            bool rightGrip = ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip);
+
+            if (leftGrip && !lastGripLeft)
             {
                 lPlat.SetActive(true);
                 lPlat.transform.position = Player.Instance.LeftHand.transform.position + Vector3.down * 0.2f;
                 lPlat.transform.rotation = Player.Instance.LeftHand.transform.rotation;
             }
-            else if (!ControllerInputManager.Instance.leftGrip && lastGripLeft)
+            else if (!leftGrip && lastGripLeft)
             {
                 lPlat.SetActive(false);
             }
 
-            if (ControllerInputManager.Instance.rightGrip && !lastGripRight)
+            if (rightGrip && !lastGripRight)
             {
                 rPlat.SetActive(true);
                 rPlat.transform.position = Player.Instance.RightHand.transform.position + Vector3.down * 0.2f;
                 rPlat.transform.rotation = Player.Instance.RightHand.transform.rotation;
             }
-            else if (!ControllerInputManager.Instance.rightGrip && lastGripRight)
+            else if (!rightGrip && lastGripRight)
             {
                 rPlat.SetActive(false);
             }
 
-            lastGripRight = ControllerInputManager.Instance.rightGrip;
-            lastGripLeft = ControllerInputManager.Instance.leftGrip;
+            lastGripRight = rightGrip;
+            lastGripLeft = leftGrip;
         }
     }
 }

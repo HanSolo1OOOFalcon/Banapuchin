@@ -1,9 +1,9 @@
-﻿using Caputilla.Utils;
-using Banapuchin.Classes;
+﻿using Banapuchin.Classes;
 using Locomotion;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Banapuchin.Libraries;
 
 namespace Banapuchin.Mods.Movement
 {
@@ -14,7 +14,11 @@ namespace Banapuchin.Mods.Movement
 
         public override void FixedUpdate()
         {
-            Vector3 inputs = new Vector3(ControllerInputManager.Instance.leftStickAxis.x, ControllerInputManager.Instance.leftStickAxis.y, ControllerInputManager.Instance.rightStickAxis.y);
+            float leftStickX = ControllerInput.instance.GetAxis(ControllerInput.StickTypes.leftStickAxis);
+            float leftStickY = ControllerInput.instance.GetAxis(ControllerInput.StickTypes.leftStickAxis); // Assuming you want to eventually separate Y here if needed
+            float rightStickY = ControllerInput.instance.GetAxis(ControllerInput.StickTypes.rightStickAxis);
+
+            Vector3 inputs = new Vector3(leftStickX, leftStickY, rightStickY);
             Vector3 forward = Player.Instance.playerCam.transform.forward;
             Vector3 right = Player.Instance.playerCam.transform.right;
 

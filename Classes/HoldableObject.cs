@@ -1,4 +1,4 @@
-﻿using Caputilla.Utils;
+﻿using Banapuchin.Libraries;
 using Locomotion;
 using UnityEngine;
 
@@ -29,11 +29,11 @@ namespace Banapuchin.Classes
                 velocity = (transform.position - lastPosition) / Time.deltaTime;
                 lastPosition = transform.position;
 
-                if (beingHeldR && !ControllerInputManager.Instance.rightGrip)
+                if (beingHeldR && !ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
                 {
                     Release(velocity);
                 }
-                else if (beingHeldL && !ControllerInputManager.Instance.leftGrip)
+                else if (beingHeldL && !ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip))
                 {
                     Release(velocity);
                 }
@@ -42,7 +42,7 @@ namespace Banapuchin.Classes
 
         void TryGrab()
         {
-            if (ControllerInputManager.Instance.rightGrip)
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
             {
                 if (!beingHeldR && Vector3.Distance(Player.Instance.RightHand.transform.position, transform.position) < grabDistance)
                 {
@@ -50,7 +50,7 @@ namespace Banapuchin.Classes
                     beingHeldR = true;
                 }
             }
-            else if (ControllerInputManager.Instance.leftGrip)
+            else if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip))
             {
                 if (!beingHeldL && Vector3.Distance(Player.Instance.LeftHand.transform.position, transform.position) < grabDistance)
                 {
