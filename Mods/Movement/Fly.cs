@@ -10,7 +10,7 @@ namespace Banapuchin.Mods.Movement
     public class Fly : ModBase
     {
         public override string Text => "Fly";
-        public override List<Type> Incompatibilities => new List<Type> { typeof(OtherFly) };
+        public override List<Type> Incompatibilities => new List<Type> { typeof(OtherFly), typeof(WeirdFly) };
 
         public override void FixedUpdate()
         {

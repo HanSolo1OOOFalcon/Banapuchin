@@ -3,12 +3,15 @@ using Locomotion;
 using Banapuchin.Classes;
 using Banapuchin.Libraries;
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 namespace Banapuchin.Mods.Movement
 {
     public class IronCapu : ModBase
     {
         public override string Text => "Iron Man";
+        public override List<Type> Incompatibilities => new List<Type> { typeof(WeirdFly) };
 
         static bool l, r;
         static ParticleSystem leftParticle, rightParticle;
