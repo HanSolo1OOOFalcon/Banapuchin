@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Banapuchin.Extensions
 {
@@ -8,8 +9,22 @@ namespace Banapuchin.Extensions
         {
             if (obj != null)
             {
+                var children = new List<Transform>();
+                foreach (Transform child in obj.transform)
+                {
+                    if (child != null)
+                        children.Add(child);
+                }
+
+                foreach (var child in children)
+                {
+                    if (child != null)
+                        child.gameObject.Obliterate(out _);
+                }
+
                 GameObject.Destroy(obj);
             }
+
             result = null;
         }
 

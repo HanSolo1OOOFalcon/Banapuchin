@@ -19,6 +19,7 @@ namespace Banapuchin.Classes
 
         void Update()
         {
+            grabDistance = 0.2f * Player.Instance.scale;
             if (!beingHeldR && !beingHeldL)
             {
                 TryGrab();

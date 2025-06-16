@@ -14,11 +14,11 @@ namespace Banapuchin.Mods.Weird
         {
             if (ControllerInputManager.Instance.rightTrigger)
             {
-                Player.Instance.scale += 0.01f;
+                Player.Instance.scale += Player.Instance.scale * 0.01f;
             }
             else if (ControllerInputManager.Instance.leftTrigger)
             {
-                Player.Instance.scale -= 0.01f;
+                Player.Instance.scale -= Player.Instance.scale * 0.01f;
             }
         }
 
