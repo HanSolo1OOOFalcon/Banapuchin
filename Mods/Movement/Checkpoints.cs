@@ -33,27 +33,19 @@ namespace Banapuchin.Mods.Movement
             }
         }
 
-        static bool wasPressed1, wasPressed2;
-
         public override void FixedUpdate()
         {
-            bool rightTriggerPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.rightTrigger);
-            bool leftTriggerPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.leftTrigger);
-
-            if (rightTriggerPressed && !wasPressed1)
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightTrigger))
             {
                 checkpointObj.SetActive(true);
                 checkpointObj.transform.position = Player.Instance.RightHand.transform.position;
                 checkpointObj.transform.rotation = Quaternion.Euler(0f, 0f, 270f);
             }
 
-            if (leftTriggerPressed && !wasPressed2 && checkpointObj.activeSelf)
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.leftTrigger) && checkpointObj.activeSelf)
             {
                 TeleportPatch.TeleportPlayer(checkpointObj.transform.position, true);
             }
-
-            wasPressed1 = rightTriggerPressed;
-            wasPressed2 = leftTriggerPressed;
         }
     }
 }

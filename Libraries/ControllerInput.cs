@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.XR;
 
 namespace Banapuchin.Libraries
@@ -6,6 +7,7 @@ namespace Banapuchin.Libraries
     public class ControllerInput : MonoBehaviour
     {
         public static ControllerInput instance;
+
         public enum InputType
         {
             leftGrip, rightGrip,
@@ -19,12 +21,30 @@ namespace Banapuchin.Libraries
             leftStickAxis, rightStickAxis,
         }
 
+        private Dictionary<InputType, bool> previousStates = new Dictionary<InputType, bool>();
+        private Dictionary<InputType, bool> currentStates = new Dictionary<InputType, bool>();
+
         void Start()
         {
             instance = this;
+
+            foreach (InputType input in System.Enum.GetValues(typeof(InputType)))
+            {
+                previousStates[input] = false;
+                currentStates[input] = false;
+            }
         }
 
-        public bool GetInput(InputType wantedInput)
+        void Update()
+        {
+            foreach (InputType input in System.Enum.GetValues(typeof(InputType)))
+            {
+                previousStates[input] = currentStates[input];
+                currentStates[input] = GetInputRaw(input);
+            }
+        }
+
+        private bool GetInputRaw(InputType wantedInput)
         {
             switch (wantedInput)
             {
@@ -48,18 +68,33 @@ namespace Banapuchin.Libraries
             return false;
         }
 
-        public float GetAxis(StickTypes wantedAxis)
+        public bool GetInput(InputType wantedInput)
+        {
+            return currentStates[wantedInput];
+        }
+
+        public bool GetInputDown(InputType wantedInput)
+        {
+            return currentStates[wantedInput] && !previousStates[wantedInput];
+        }
+
+        public bool GetInputUp(InputType wantedInput)
+        {
+            return !currentStates[wantedInput] && previousStates[wantedInput];
+        }
+
+        public Vector2 GetAxis(StickTypes wantedAxis)
         {
             switch (wantedAxis)
             {
                 case StickTypes.leftStickAxis:
                     InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 leftAxis);
-                    return leftAxis.x;
+                    return leftAxis;
                 case StickTypes.rightStickAxis:
                     InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 rightAxis);
-                    return rightAxis.x;
+                    return rightAxis;
             }
-            return 0f;
+            return Vector2.zero;
         }
     }
 }

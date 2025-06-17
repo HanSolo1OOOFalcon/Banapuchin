@@ -14,9 +14,9 @@ namespace Banapuchin.Mods.Movement
 
         public override void FixedUpdate()
         {
-            float leftStickX = ControllerInput.instance.GetAxis(ControllerInput.StickTypes.leftStickAxis);
-            float leftStickY = ControllerInput.instance.GetAxis(ControllerInput.StickTypes.leftStickAxis); // Assuming you want to eventually separate Y here if needed
-            float rightStickY = ControllerInput.instance.GetAxis(ControllerInput.StickTypes.rightStickAxis);
+            float leftStickX = ControllerInput.instance.GetAxis(ControllerInput.StickTypes.leftStickAxis).x;
+            float leftStickY = ControllerInput.instance.GetAxis(ControllerInput.StickTypes.leftStickAxis).y;
+            float rightStickY = ControllerInput.instance.GetAxis(ControllerInput.StickTypes.rightStickAxis).y;
 
             Vector3 inputs = new Vector3(leftStickX, leftStickY, rightStickY);
             Vector3 forward = Player.Instance.playerCam.transform.forward;

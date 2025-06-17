@@ -14,10 +14,7 @@ namespace Banapuchin.Mods.Movement
 
         public override void FixedUpdate()
         {
-            bool rightGrip = ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip);
-            bool leftGrip = ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip);
-
-            if (rightGrip && leftGrip)
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip) && ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
             {
                 float magnitude = (Player.Instance.LeftHand.transform.position - Player.Instance.RightHand.transform.position).magnitude;
                 Vector3 direction = Player.Instance.playerCam.gameObject.transform.forward;

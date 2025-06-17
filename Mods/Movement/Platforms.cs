@@ -11,7 +11,6 @@ namespace Banapuchin.Mods.Movement
         public override string Text => "Platforms";
 
         public static GameObject lPlat, rPlat;
-        static bool lastGripLeft = false, lastGripRight = false;
 
         public override void OnDisable()
         {
@@ -49,33 +48,27 @@ namespace Banapuchin.Mods.Movement
 
         public override void Update()
         {
-            bool leftGrip = ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip);
-            bool rightGrip = ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip);
-
-            if (leftGrip && !lastGripLeft)
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.leftGrip))
             {
                 lPlat.SetActive(true);
                 lPlat.transform.position = Player.Instance.LeftHand.transform.position + Vector3.down * 0.2f;
                 lPlat.transform.rotation = Player.Instance.LeftHand.transform.rotation;
             }
-            else if (!leftGrip && lastGripLeft)
+            else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.leftGrip))
             {
                 lPlat.SetActive(false);
             }
 
-            if (rightGrip && !lastGripRight)
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightGrip))
             {
                 rPlat.SetActive(true);
                 rPlat.transform.position = Player.Instance.RightHand.transform.position + Vector3.down * 0.2f;
                 rPlat.transform.rotation = Player.Instance.RightHand.transform.rotation;
             }
-            else if (!rightGrip && lastGripRight)
+            else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.rightGrip))
             {
                 rPlat.SetActive(false);
             }
-
-            lastGripRight = rightGrip;
-            lastGripLeft = leftGrip;
         }
     }
 }
