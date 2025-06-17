@@ -10,7 +10,7 @@ namespace Banapuchin.Mods.Weird
     {
         public override string Text => "Size Changer";
 
-        public override void FixedUpdate()
+        public override void Update()
         {
             if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightTrigger))
             {

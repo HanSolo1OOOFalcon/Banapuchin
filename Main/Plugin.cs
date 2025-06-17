@@ -198,13 +198,12 @@ namespace Banapuchin.Main
 
         }
 
-        static bool wasPressed;
         void Update()
         {
             if (!allowed) 
                 return;
 
-            if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightSecondaryButton) && !wasPressed)
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightSecondaryButton))
             {
                 menu.GetComponent<Rigidbody>().isKinematic = true;
                 menu.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
@@ -215,7 +214,6 @@ namespace Banapuchin.Main
                 rBall.SetActive(true);
                 menu.SetActive(true);
             }
-            wasPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.rightSecondaryButton);
 
             if (!menu.GetComponent<Rigidbody>().isKinematic)
             {

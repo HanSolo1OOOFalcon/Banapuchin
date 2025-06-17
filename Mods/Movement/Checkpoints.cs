@@ -33,7 +33,7 @@ namespace Banapuchin.Mods.Movement
             }
         }
 
-        public override void FixedUpdate()
+        public override void Update()
         {
             if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightTrigger))
             {

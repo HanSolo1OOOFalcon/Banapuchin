@@ -43,7 +43,7 @@ namespace Banapuchin.Mods.Movement
             GameObject.Destroy(rightParticle.gameObject);
         }
 
-        public override void FixedUpdate()
+        public override void Update()
         {
             bool rightGripPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip);
             bool leftGripPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip);

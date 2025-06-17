@@ -10,6 +10,13 @@ namespace Banapuchin.Mods.Multiplayer
 
         static List<LineRenderer> tracers = new List<LineRenderer>();
 
+        private int pointsPerTracer = 100;
+        private float spiralTurns = 3f;
+        private float rotationSpeed = 4f;
+        private float pulseSpeed = 5f;
+        private float pulseAmount = 0.04f;
+        private float baseRadius = 0.05f;
+
         public override void Update()
         {
             foreach (var thing in FusionHub.Instance.SpawnedPlayers)
@@ -22,15 +29,43 @@ namespace Banapuchin.Mods.Multiplayer
                 if (tracer == null)
                 {
                     tracer = head.AddComponent<LineRenderer>();
+
+                    tracer.positionCount = pointsPerTracer;
                     tracer.startWidth = 0.005f;
                     tracer.endWidth = 0.005f;
+
                     tracer.material.shader = Shader.Find("GUI/Text Shader");
-                    tracer.material.color = Color.white * 0.75f;
+                    tracer.material.color = player.__Color;
+
                     tracers.Add(tracer);
                 }
 
-                tracer.SetPosition(0, Locomotion.Player.Instance.RightHand.transform.position);
-                tracer.SetPosition(1, head.transform.position);
+                float currentRadius = baseRadius + Mathf.Sin(Time.time * pulseSpeed) * pulseAmount;
+
+                Vector3 start = Locomotion.Player.Instance.RightHand.transform.position;
+                Vector3 end = head.transform.position;
+
+                Vector3 direction = (end - start).normalized;
+                float distance = Vector3.Distance(start, end);
+
+                Vector3 right = Vector3.Cross(direction, Vector3.up).normalized;
+
+                if (right == Vector3.zero)
+                    right = Vector3.Cross(direction, Vector3.forward).normalized;
+
+                float angleOffset = Time.time * rotationSpeed;
+
+                for (int i = 0; i < pointsPerTracer; i++)
+                {
+                    float t = (float)i / (pointsPerTracer - 1);
+                    Vector3 pointOnLine = Vector3.Lerp(start, end, t);
+
+                    float angle = t * spiralTurns * Mathf.PI * 2 + angleOffset;
+
+                    Vector3 offset = (Quaternion.AngleAxis(angle * Mathf.Rad2Deg, direction) * right) * currentRadius;
+
+                    tracer.SetPosition(i, pointOnLine + offset);
+                }
             }
         }
 

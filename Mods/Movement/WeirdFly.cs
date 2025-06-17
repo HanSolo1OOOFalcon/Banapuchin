@@ -12,7 +12,7 @@ namespace Banapuchin.Mods.Movement
         public override string Text => "Weird Fly";
         public override List<Type> Incompatibilities => new List<Type> { typeof(Fly), typeof(OtherFly), typeof(IronCapu) };
 
-        public override void FixedUpdate()
+        public override void Update()
         {
             if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip) && ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
             {
