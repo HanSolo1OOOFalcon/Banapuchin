@@ -39,8 +39,6 @@ namespace Banapuchin.Classes
                     Release(velocity);
                 }
             }
-            var thing = FusionHub.currentQueue;
-            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
         }
 
         void TryGrab()

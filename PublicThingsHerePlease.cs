@@ -32,7 +32,6 @@ namespace Banapuchin
                 bool isVisible = currentButtonIndex >= startIndex && currentButtonIndex < endIndex;
 
                 button.ButtonObject.SetActive(isVisible);
-                button.TextObject.SetActive(isVisible);
 
                 currentButtonIndex++;
             }

@@ -92,6 +92,5 @@ namespace Banapuchin.Classes
 
         // Do not assign these
         public GameObject ButtonObject = null;
-        public GameObject TextObject = null;
     }
 }

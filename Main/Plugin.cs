@@ -10,6 +10,7 @@ using TMPro;
 using System.Reflection;
 using System.Linq;
 using Banapuchin.Libraries;
+using Il2CppInterop.Runtime;
 
 /*
 Copyright (c) 2025 HanSolo1000Falcon
@@ -116,7 +117,7 @@ namespace Banapuchin.Main
             buttonManager.modInstance = instance;
 
             instance.ButtonObject = button;
-            instance.TextObject = CreateTextLabel(instance.Text, button.transform, new Vector3(0f, 0f, 0.007f), Quaternion.Euler(0f, 180f, 270f), 0.125f);
+            CreateTextLabel(instance.Text, button.transform, new Vector3(0f, 0f, 0.007f), Quaternion.Euler(0f, 180f, 270f), 0.125f);
         }
 
         private static GameObject CreateTextLabel(string text, Transform parent, Vector3 pos, Quaternion rot, float size)
@@ -195,7 +196,6 @@ namespace Banapuchin.Main
                 mod.OnDisable();
             }
             modInstances.Clear();
-
         }
 
         void Update()

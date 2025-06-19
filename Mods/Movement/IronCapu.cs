@@ -33,7 +33,6 @@ namespace Banapuchin.Mods.Movement
             leftAudio.loop = true;
             leftAudio.spatialBlend = 1f;
             leftAudio.playOnAwake = false;
-            leftAudio.Stop();
 
             rightParticle = GameObject.Instantiate(particle.GetComponent<ParticleSystem>());
             rightParticle.transform.SetParent(Player.Instance.RightHand.transform);
@@ -46,7 +45,6 @@ namespace Banapuchin.Mods.Movement
             rightAudio.loop = true;
             rightAudio.spatialBlend = 1f;
             rightAudio.playOnAwake = false;
-            rightAudio.Stop();
         }
 
         public override void OnDisable()

@@ -69,6 +69,10 @@ namespace Banapuchin.Mods.Movement
             {
                 rPlat.SetActive(false);
             }
+
+            Material toAssign = GameObject.Find("Global/CapuchinPhysRig/XR Origin/CapuchinPlayer/Main Camera/CameraChild/PlayerModeel/CapuchinRemadeMale/body").GetComponent<Renderer>().material;
+            lPlat.GetComponent<Renderer>().materials[0] = toAssign;
+            rPlat.GetComponent<Renderer>().materials[0] = toAssign;
         }
     }
 }
