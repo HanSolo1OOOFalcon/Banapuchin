@@ -185,16 +185,19 @@ namespace Banapuchin.Main
         public static void OnModdedLeave()
         {
             allowed = false;
+
+            foreach (ModBase mod in modInstances)
+            {
+                if (mod.isEnabled)
+                {
+                    mod.OnDisable();
+                    mod.isEnabled = false;
+                }
+            }
+
             menu.Obliterate(out menu);
             rBall.Obliterate(out rBall);
             lBall.Obliterate(out lBall);
-
-            toInvoke.Clear();
-            toInvokeFixed.Clear();
-            foreach (ModBase mod in modInstances)
-            {
-                mod.OnDisable();
-            }
             modInstances.Clear();
         }
 

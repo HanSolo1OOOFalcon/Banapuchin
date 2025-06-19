@@ -12,6 +12,7 @@ namespace Banapuchin.Libraries
         public FusionPlayer selectedFusionPlayer;
         private GameObject pointer;
         private LineRenderer line;
+        private GameObject gun;
         
         public void OnEnable()
         {
@@ -28,6 +29,15 @@ namespace Banapuchin.Libraries
             line.material = new Material(Shader.Find("Unlit/Color"));
             line.material.color = Color.white * 0.75f;
             line.positionCount = 2;
+
+            GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("BananaGun");
+            gun = GameObject.Instantiate(foo);
+            gun.transform.SetParent(Player.Instance.RightHand.transform);
+            gun.transform.localPosition = new Vector3(-0.038f, -0.0325f, 0.012f);
+            gun.transform.localRotation = Quaternion.Euler(0f, 90f, 45f);
+            gun.transform.localScale = Vector3.one * 0.175f;
+            gun.SetActive(false);
+            PublicThingsHerePlease.FixShaders(gun);
         }
 
         public void OnDisable()
@@ -43,11 +53,13 @@ namespace Banapuchin.Libraries
             Vector3 direction = -Player.Instance.RightHand.transform.up;
             Vector3 rotatedDirection = Quaternion.AngleAxis(-45f, Player.Instance.RightHand.transform.right) * direction;
 
-            Vector3 handRight = Quaternion.AngleAxis(45f, Player.Instance.RightHand.transform.right) * -Player.Instance.RightHand.transform.up;
-            Vector3 offsetPosition = Player.Instance.RightHand.transform.position + handRight.normalized * 0.0275f;
+            /*Vector3 handRight = Quaternion.AngleAxis(45f, Player.Instance.RightHand.transform.right) * -Player.Instance.RightHand.transform.up;*/
+            Vector3 offset = new Vector3(-0.81f, 0.5f, 0);
+            Vector3 offsetPosition = gun.transform.TransformPoint(offset);/*Player.Instance.RightHand.transform.position + handRight.normalized * 0.0275f;*/
 
             if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
             {
+                gun.SetActive(true);
                 if (Physics.Raycast(offsetPosition, rotatedDirection, out hit, 1000f))
                 {
                     pointer.SetActive(true); // devlog 4. monky said hes gonna teach me active players!!!!!!!!! 2025-06-04 20:14 (YYYY-MM-DD HH:MM) GMT+1
@@ -103,6 +115,7 @@ namespace Banapuchin.Libraries
             }
             else
             {
+                gun.SetActive(false);
                 pointer.SetActive(false);
                 isFiring = false;
             }

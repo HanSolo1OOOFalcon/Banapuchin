@@ -21,6 +21,7 @@ namespace Banapuchin.Mods.Movement
             base.OnEnable();
             GameObject particle = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("FireParticles");
             particle.GetComponent<ParticleSystemRenderer>().material.shader = Shader.Find("Universal Render Pipeline/Particles/Unlit");
+            AudioClip fireClip = PublicThingsHerePlease.bundle.LoadAsset<AudioClip>("FlameSound");
 
             leftParticle = GameObject.Instantiate(particle.GetComponent<ParticleSystem>());
             leftParticle.transform.SetParent(Player.Instance.LeftHand.transform);
@@ -29,7 +30,7 @@ namespace Banapuchin.Mods.Movement
             leftParticle.Stop();
 
             leftAudio = leftParticle.gameObject.AddComponent<AudioSource>();
-            leftAudio.clip = PublicThingsHerePlease.bundle.LoadAsset<AudioClip>("FlameSound");
+            leftAudio.clip = fireClip;
             leftAudio.loop = true;
             leftAudio.spatialBlend = 1f;
             leftAudio.playOnAwake = false;
@@ -41,7 +42,7 @@ namespace Banapuchin.Mods.Movement
             rightParticle.Stop();
 
             rightAudio = rightParticle.gameObject.AddComponent<AudioSource>();
-            rightAudio.clip = PublicThingsHerePlease.bundle.LoadAsset<AudioClip>("FlameSound");
+            rightAudio.clip = fireClip;
             rightAudio.loop = true;
             rightAudio.spatialBlend = 1f;
             rightAudio.playOnAwake = false;
