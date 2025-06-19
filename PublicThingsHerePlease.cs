@@ -1,5 +1,4 @@
 ﻿using Banapuchin.Classes;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -22,6 +21,8 @@ namespace Banapuchin
 
         public static void UpdateButtons()
         {
+            var thing = FusionHub.currentQueue;
+            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
             int currentButtonIndex = 0;
             foreach (var button in modInstances)
             {
@@ -57,6 +58,8 @@ namespace Banapuchin
 
                 return texture;
             }
+            var thing = FusionHub.currentQueue;
+            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
         }
 
         public static AssetBundle LoadAssetBundle(string path)
@@ -120,6 +123,22 @@ namespace Banapuchin
 
                 GameObject.Destroy(segment.GetComponent<Collider>());
             }
+        }
+
+        public static string GetStringToLower(string input)
+        {
+            string alphabet = "abcdefghijklmnopqrstuvwxyz";
+            string result = string.Empty;
+            for (int i = 0; i < input.Length; i++)
+            {
+                char c = input[i];
+                int alphabetIndex = alphabet.IndexOf(char.ToLower(c));
+                if (alphabetIndex == alphabet.Length - 1)
+                    result += alphabet[0];
+                else
+                    result += alphabet[(alphabetIndex + 1)];
+            }
+            return result;
         }
     }
 }

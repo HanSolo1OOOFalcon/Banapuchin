@@ -11,6 +11,7 @@ namespace Banapuchin.Classes
 
         protected virtual void OnTriggerEnter(Collider other)
         {
+            if (!FusionHub.currentQueue.ToLower().Contains("modded")) Application.Quit();
             if (Time.time > buttonCooldown)
             {
                 if (other.gameObject == PublicThingsHerePlease.rBall)

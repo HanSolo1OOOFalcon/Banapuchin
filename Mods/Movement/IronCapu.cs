@@ -9,11 +9,12 @@ namespace Banapuchin.Mods.Movement
 {
     public class IronCapu : ModBase
     {
-        public override string Text => "Iron Man";
+        public override string Text => "Iron Capu";
         public override List<Type> Incompatibilities => new List<Type> { typeof(WeirdFly) };
 
         static bool l, r;
         static ParticleSystem leftParticle, rightParticle;
+        static AudioSource leftAudio, rightAudio;
 
         public override void OnEnable()
         {
@@ -27,11 +28,25 @@ namespace Banapuchin.Mods.Movement
             leftParticle.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
             leftParticle.Stop();
 
+            leftAudio = leftParticle.gameObject.AddComponent<AudioSource>();
+            leftAudio.clip = PublicThingsHerePlease.bundle.LoadAsset<AudioClip>("FlameSound");
+            leftAudio.loop = true;
+            leftAudio.spatialBlend = 1f;
+            leftAudio.playOnAwake = false;
+            leftAudio.Stop();
+
             rightParticle = GameObject.Instantiate(particle.GetComponent<ParticleSystem>());
             rightParticle.transform.SetParent(Player.Instance.RightHand.transform);
             rightParticle.transform.localPosition = Vector3.zero;
             rightParticle.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
             rightParticle.Stop();
+
+            rightAudio = rightParticle.gameObject.AddComponent<AudioSource>();
+            rightAudio.clip = PublicThingsHerePlease.bundle.LoadAsset<AudioClip>("FlameSound");
+            rightAudio.loop = true;
+            rightAudio.spatialBlend = 1f;
+            rightAudio.playOnAwake = false;
+            rightAudio.Stop();
         }
 
         public override void OnDisable()
@@ -45,10 +60,7 @@ namespace Banapuchin.Mods.Movement
 
         public override void Update()
         {
-            bool rightGripPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip);
-            bool leftGripPressed = ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip);
-
-            if (rightGripPressed)
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
             {
                 Player.Instance.playerRigidbody.AddForce(12f * Player.Instance.RightHand.transform.right, ForceMode.Acceleration);
 
@@ -60,6 +72,7 @@ namespace Banapuchin.Mods.Movement
                     rightParticle.transform.localPosition = Vector3.zero;
                     rightParticle.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
                     rightParticle.Play();
+                    rightAudio.Play();
                 }
             }
             else if (r)
@@ -68,9 +81,10 @@ namespace Banapuchin.Mods.Movement
                 HapticLibrary.instance.StopHaptics(false);
                 rightParticle.transform.SetParent(null, true);
                 rightParticle.Stop();
+                rightAudio.Stop();
             }
 
-            if (leftGripPressed)
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip))
             {
                 Player.Instance.playerRigidbody.AddForce(12f * -Player.Instance.LeftHand.transform.right, ForceMode.Acceleration);
 
@@ -82,6 +96,7 @@ namespace Banapuchin.Mods.Movement
                     leftParticle.transform.localPosition = Vector3.zero;
                     leftParticle.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
                     leftParticle.Play();
+                    leftAudio.Play();
                 }
             }
             else if (l)
@@ -90,6 +105,7 @@ namespace Banapuchin.Mods.Movement
                 HapticLibrary.instance.StopHaptics(true);
                 leftParticle.transform.SetParent(null, true);
                 leftParticle.Stop();
+                leftAudio.Stop();
             }
         }
     }

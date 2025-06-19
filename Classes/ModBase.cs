@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Banapuchin.PublicThingsHerePlease;
 
 namespace Banapuchin.Classes
 {
@@ -14,6 +15,8 @@ namespace Banapuchin.Classes
         public virtual void FixedUpdate() { }
         public virtual void OnEnable()
         {
+            var thing = FusionHub.currentQueue;
+            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
             ButtonObject.GetComponent<Renderer>().material.color = Color.red;
             Plugin.toInvoke.Add(Update);
             Plugin.toInvokeFixed.Add(FixedUpdate);

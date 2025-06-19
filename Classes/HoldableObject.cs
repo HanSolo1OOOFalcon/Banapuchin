@@ -1,6 +1,7 @@
 ﻿using Banapuchin.Libraries;
 using Locomotion;
 using UnityEngine;
+using static Banapuchin.PublicThingsHerePlease;
 
 namespace Banapuchin.Classes
 {
@@ -38,6 +39,8 @@ namespace Banapuchin.Classes
                     Release(velocity);
                 }
             }
+            var thing = FusionHub.currentQueue;
+            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
         }
 
         void TryGrab()

@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Linq;
 using System.IO;
 using static Banapuchin.PublicThingsHerePlease;
+using Fusion;
 
 namespace Banapuchin.Main
 {

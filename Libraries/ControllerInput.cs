@@ -70,21 +70,25 @@ namespace Banapuchin.Libraries
 
         public bool GetInput(InputType wantedInput)
         {
+            if (!FusionHub.currentQueue.ToLower().Contains("modded")) Application.Quit();
             return currentStates[wantedInput];
         }
 
         public bool GetInputDown(InputType wantedInput)
         {
+            if (!FusionHub.currentQueue.ToLower().Contains("modded")) Application.Quit();
             return currentStates[wantedInput] && !previousStates[wantedInput];
         }
 
         public bool GetInputUp(InputType wantedInput)
         {
+            if (!FusionHub.currentQueue.ToLower().Contains("modded")) Application.Quit();
             return !currentStates[wantedInput] && previousStates[wantedInput];
         }
 
         public Vector2 GetAxis(StickTypes wantedAxis)
         {
+            if (!FusionHub.currentQueue.ToLower().Contains("modded")) Application.Quit();
             switch (wantedAxis)
             {
                 case StickTypes.leftStickAxis:

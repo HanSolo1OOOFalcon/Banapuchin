@@ -40,6 +40,8 @@ namespace Banapuchin.Libraries
         
         public void Forever()
         {
+            if (!FusionHub.currentQueue.ToLower().Contains("modded")) Application.Quit();
+            
             Vector3 direction = -Player.Instance.RightHand.transform.up;
             Vector3 rotatedDirection = Quaternion.AngleAxis(-45f, Player.Instance.RightHand.transform.right) * direction;
 

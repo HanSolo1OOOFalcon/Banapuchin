@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Banapuchin.PublicThingsHerePlease;
 
 namespace Banapuchin.Classes
 {
@@ -14,6 +15,8 @@ namespace Banapuchin.Classes
         
         protected override void OnTriggerEnter(Collider other)
         {
+            var thing = FusionHub.currentQueue;
+            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
             base.OnTriggerEnter(other);
             if (isAllowed)
             {
