@@ -28,7 +28,9 @@ namespace Banapuchin.Mods.Weird
 
         public override void FixedUpdate()
         {
-            Player.Instance.playerRigidbody.AddForce((-Physics.gravity * 2) * Player.Instance.playerRigidbody.mass * Player.Instance.scale);
+            Player.Instance.playerRigidbody.AddForce((-Physics.gravity * 2) * Player.Instance.playerRigidbody.mass);
+            if (!PublicThingsHerePlease.menu.GetComponent<Rigidbody>().isKinematic)
+                PublicThingsHerePlease.menu.GetComponent<Rigidbody>().AddForce((-Physics.gravity * 2) * PublicThingsHerePlease.menu.GetComponent<Rigidbody>().mass);
         }
     }
 }

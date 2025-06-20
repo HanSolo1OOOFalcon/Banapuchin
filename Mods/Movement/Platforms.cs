@@ -70,7 +70,7 @@ namespace Banapuchin.Mods.Movement
             }
             else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.rightGrip))
             {
-                rPlat.SetActive(true);
+                rPlat.SetActive(false);
             }
         }
     }

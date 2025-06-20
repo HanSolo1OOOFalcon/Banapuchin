@@ -12,9 +12,21 @@ namespace Banapuchin.Mods.Movement
         public override string Text => "Zero Gravity";
         public override List<Type> Incompatibilities => new List<Type> { typeof(UpsideDown) };
 
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            PublicThingsHerePlease.menu.GetComponent<Rigidbody>().useGravity = false;
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            PublicThingsHerePlease.menu.GetComponent<Rigidbody>().useGravity = true;
+        }
+
         public override void FixedUpdate()
         {
-            Player.Instance.playerRigidbody.AddForce(-Physics.gravity * Player.Instance.playerRigidbody.mass * Player.Instance.scale);
+            Player.Instance.playerRigidbody.AddForce(-Physics.gravity * Player.Instance.playerRigidbody.mass);
         }
     }
 }
