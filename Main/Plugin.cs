@@ -10,7 +10,6 @@ using TMPro;
 using System.Reflection;
 using System.Linq;
 using Banapuchin.Libraries;
-using Il2CppInterop.Runtime;
 
 /*
 Copyright (c) 2025 HanSolo1000Falcon

@@ -16,22 +16,25 @@ namespace Banapuchin.Mods.Movement
         {
             base.OnDisable();
             if (lPlat != null)
-            {
                 lPlat.Obliterate(out lPlat);
-            }
+
             if (rPlat != null)
-            {
                 rPlat.Obliterate(out rPlat);
-            }
         }
 
-        static GameObject CreatePlat()
+        private static GameObject CreatePlat()
         {
             GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("CapuchinHead");
             GameObject plat = GameObject.Instantiate(foo);
             plat.transform.localScale = Vector3.one * 100f;
-            plat.AddComponent<BoxCollider>();
             PublicThingsHerePlease.FixShaders(plat);
+
+            GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            go.transform.SetParent(plat.transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = new Vector3(0.0005f, 0.0025f, 0.0025f);
+            go.transform.localRotation = Quaternion.identity;
+
             plat.SetActive(false);
             return plat;
         }
@@ -67,12 +70,8 @@ namespace Banapuchin.Mods.Movement
             }
             else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.rightGrip))
             {
-                rPlat.SetActive(false);
+                rPlat.SetActive(true);
             }
-
-            Material toAssign = GameObject.Find("Global/CapuchinPhysRig/XR Origin/CapuchinPlayer/Main Camera/CameraChild/PlayerModeel/CapuchinRemadeMale/body").GetComponent<Renderer>().material;
-            lPlat.GetComponent<Renderer>().materials[0] = toAssign;
-            rPlat.GetComponent<Renderer>().materials[0] = toAssign;
         }
     }
 }
