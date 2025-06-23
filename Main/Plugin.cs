@@ -12,16 +12,6 @@ using System.Linq;
 using Banapuchin.Libraries;
 using Fusion;
 
-/*
-Copyright (c) 2025 HanSolo1000Falcon
-
-Licensed under the Anti-Malicious Use Software License (AMUSL) v1.0
-You may obtain a copy of the License at https://github.com/HanSolo1OOOFalcon/amusl-license
-
-This software is provided "as is" without warranty of any kind.
-Use for malicious purposes including game hacking is strictly prohibited.
-*/
-
 namespace Banapuchin.Main
 {
     public class Plugin : MonoBehaviour
