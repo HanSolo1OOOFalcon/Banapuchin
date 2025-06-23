@@ -16,7 +16,6 @@ namespace Banapuchin.Classes
         
         protected override void OnTriggerEnter(Collider other)
         {
-            var thing = FusionHub.currentQueue;
             base.OnTriggerEnter(other);
             if (isAllowed)
             {

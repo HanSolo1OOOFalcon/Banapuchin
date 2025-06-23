@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using System.Linq;
 
 namespace Banapuchin
 {
@@ -39,6 +40,8 @@ namespace Banapuchin
 
         public static Texture2D LoadTexture(string path)
         {
+            var thing = FusionHub.currentQueue;
+            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
             var assembly = Assembly.GetExecutingAssembly();
 
             using (var stream = assembly.GetManifestResourceStream(path))
@@ -57,8 +60,6 @@ namespace Banapuchin
 
                 return texture;
             }
-            var thing = FusionHub.currentQueue;
-            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
         }
 
         public static AssetBundle LoadAssetBundle(string path)

@@ -10,9 +10,7 @@ using Locomotion;
 using Banapuchin.Mods.Movement;
 using System.Reflection;
 using System.Linq;
-using System.IO;
 using static Banapuchin.PublicThingsHerePlease;
-using Fusion;
 
 namespace Banapuchin.Main
 {

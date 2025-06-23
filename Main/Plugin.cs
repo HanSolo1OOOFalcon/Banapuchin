@@ -10,6 +10,7 @@ using TMPro;
 using System.Reflection;
 using System.Linq;
 using Banapuchin.Libraries;
+using Fusion;
 
 /*
 Copyright (c) 2025 HanSolo1000Falcon

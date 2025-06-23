@@ -16,6 +16,7 @@ namespace Banapuchin.Classes
         void Start()
         {
             rb = transform.gameObject.GetComponent<Rigidbody>();
+            if (!FusionHub.currentQueue.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
         }
 
         void Update()
