@@ -11,7 +11,7 @@ namespace Banapuchin.Mods.Gun
         public override string Text => "Spectate Gun";
         public override List<Type> Incompatibilities => new List<Type> { typeof(Thirdperson) };
 
-        private readonly GunLibrary gun = new GunLibrary
+        private readonly GunLibrary gun = new GunLibrary // hi
         {
             FollowPlayer = true,
         };
