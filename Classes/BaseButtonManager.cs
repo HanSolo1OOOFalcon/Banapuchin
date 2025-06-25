@@ -1,4 +1,4 @@
-﻿using Banapuchin.Libraries;
+using Banapuchin.Libraries;
 using UnityEngine;
 
 namespace Banapuchin.Classes

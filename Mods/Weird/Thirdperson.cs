@@ -1,10 +1,8 @@
-﻿using Banapuchin.Classes;
+using Banapuchin.Classes;
 using Banapuchin.Extensions;
-using Locomotion;
+using Il2CppLocomotion;
 using UnityEngine;
-using System.Collections.Generic;
 using Banapuchin.Mods.Gun;
-using System;
 
 namespace Banapuchin.Mods.Weird
 {

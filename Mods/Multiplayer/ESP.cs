@@ -1,4 +1,5 @@
-﻿using Banapuchin.Classes;
+using Banapuchin.Classes;
+using Il2Cpp;
 using UnityEngine;
 
 namespace Banapuchin.Mods.Multiplayer

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project>
-	<PropertyGroup>
-		<GamePath>D:\Spel\Steam\steamapps\common\Capuchin</GamePath>
-		<GameAssemblyPath>$(GamePath)\BepInEx\interop</GameAssemblyPath>
-		<BepInExAssemblyPath>$(GamePath)\BepInEx\core</BepInExAssemblyPath>
-		<PluginsPath>$(GamePath)\BepInEx\plugins</PluginsPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(CI)'=='TRUE'">
-		<GameAssemblyPath>.\Libs</GameAssemblyPath>
-		<BepInExAssemblyPath>.\Libs</BepInExAssemblyPath>
-		<PluginsPath>.\Libs</PluginsPath>
-		<WarningLevel>0</WarningLevel>
-	</PropertyGroup>
+    <PropertyGroup>
+        <GamePath>D:\Spel\Steam\steamapps\common\Capuchin</GamePath>
+        <GameAssemblyPath>$(GamePath)\MelonLoader\Il2CppAssemblies</GameAssemblyPath>
+        <MelonLoaderAssemblyPath>$(GamePath)\MelonLoader\net6</MelonLoaderAssemblyPath>
+        <ModsPath>$(GamePath)\Mods</ModsPath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(CI)'=='TRUE'">
+        <GameAssemblyPath>.\Libs</GameAssemblyPath>
+        <MelonLoaderAssemblyPath>.\Libs</MelonLoaderAssemblyPath>
+        <ModsPath>.\Libs</ModsPath>
+        <WarningLevel>0</WarningLevel>
+    </PropertyGroup>
 </Project>

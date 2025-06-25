@@ -1,8 +1,8 @@
-﻿using Banapuchin.Classes;
+using Banapuchin.Classes;
 using Banapuchin.Extensions;
 using Banapuchin.Patches;
 using Banapuchin.Libraries;
-using Locomotion;
+using Il2CppLocomotion;
 using UnityEngine;
 
 namespace Banapuchin.Mods.Movement
@@ -17,7 +17,7 @@ namespace Banapuchin.Mods.Movement
         {
             base.OnEnable();
             GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("Banana");
-            _checkpointObj = Object.Instantiate(foo);
+            _checkpointObj = UnityEngine.Object.Instantiate(foo);
             _checkpointObj.name = "CheckpointBanana";
             _checkpointObj.transform.localScale = Vector3.one * 8f;
             PublicThingsHerePlease.FixShaders(_checkpointObj);

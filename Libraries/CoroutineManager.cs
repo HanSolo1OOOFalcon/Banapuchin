@@ -1,17 +1,19 @@
-﻿using BepInEx.Unity.IL2CPP.Utils.Collections;
 using System.Collections;
+using Banapuchin.Classes;
+using Il2Cpp;
+using MelonLoader;
 using UnityEngine;
 
 namespace Banapuchin.Libraries
 {
-    public class CoroutineManager : MonoBehaviour
+    public class CoroutineManager : BetterMonoBehaviour
     {
         public static CoroutineManager instance;
 
-        public Coroutine RunCoroutine(IEnumerator routine)
+        public void RunCoroutine(IEnumerator routine)
         {
             if (!FusionHub.currentQueue.ToLower().Contains("modded")) Application.Quit();
-            return StartCoroutine(routine.WrapToIl2Cpp());
+            MelonCoroutines.Start(routine);
         }
 
         void Start() => instance = this;

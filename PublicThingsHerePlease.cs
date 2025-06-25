@@ -1,12 +1,11 @@
-﻿using Banapuchin.Classes;
-using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
+using Banapuchin.Classes;
+using Il2Cpp;
 using UnityEngine;
 
 namespace Banapuchin
 {
-    internal class PublicThingsHerePlease
+    public class PublicThingsHerePlease
     {
         public static GameObject Menu;
         public static GameObject BallR, BallL;
@@ -63,20 +62,11 @@ namespace Banapuchin
 
         public static AssetBundle LoadAssetBundle(string path)
         {
+            MemoryStream memoryStream;
             Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(path);
-
-            byte[] buffer;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                stream.CopyTo(ms);
-                buffer = ms.ToArray();
-            }
-
-            Il2CppSystem.IO.MemoryStream il2CPPStream = new Il2CppSystem.IO.MemoryStream(buffer);
-
-            var assetBundle = AssetBundle.LoadFromStream(il2CPPStream);
-
-            return assetBundle;
+            memoryStream = new MemoryStream((int)stream.Length);
+            stream.CopyTo(memoryStream);
+            return AssetBundle.LoadFromMemory(memoryStream.ToArray());
         }
 
         public static void FixShaders(GameObject obj, string shaderPath = "Shader Graphs/ShadedPiss")
@@ -121,7 +111,7 @@ namespace Banapuchin
                 r.material.shader = Shader.Find("Unlit/Color");
                 r.material.color = bananaYellow;
 
-                Object.Destroy(segment.GetComponent<Collider>());
+                UnityEngine.Object.Destroy(segment.GetComponent<Collider>());
             }
         }
 

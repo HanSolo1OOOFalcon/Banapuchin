@@ -1,9 +1,7 @@
-﻿using Locomotion;
+using Il2CppLocomotion;
 using Banapuchin.Classes;
 using Banapuchin.Libraries;
 using UnityEngine;
-using System;
-using System.Collections.Generic;
 using Object = UnityEngine.Object;
 
 namespace Banapuchin.Mods.Movement

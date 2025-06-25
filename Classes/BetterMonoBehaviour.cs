@@ -1,4 +1,4 @@
-﻿using Banapuchin.Main;
+using MelonLoader;
 using UnityEngine;
 
 namespace Banapuchin.Classes
@@ -7,6 +7,6 @@ namespace Banapuchin.Classes
     {
         // guys trust its better
         // lemme cook and make it better
-        public virtual void IUseArchBTW() => Debug.Log("i use arch btw");
+        public virtual void IUseArchBTW() => MelonLogger.Msg("i use arch btw");
     }
 }

@@ -1,5 +1,5 @@
-﻿using Banapuchin.Classes;
-using Locomotion;
+using Banapuchin.Classes;
+using Il2CppLocomotion;
 using UnityEngine;
 
 namespace Banapuchin.Mods.Movement

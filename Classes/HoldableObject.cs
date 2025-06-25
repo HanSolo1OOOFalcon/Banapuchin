@@ -1,5 +1,6 @@
-﻿using Banapuchin.Libraries;
-using Locomotion;
+using Banapuchin.Libraries;
+using Il2Cpp;
+using Il2CppLocomotion;
 using UnityEngine;
 using static Banapuchin.PublicThingsHerePlease;
 

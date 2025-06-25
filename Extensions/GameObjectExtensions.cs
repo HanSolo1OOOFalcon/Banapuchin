@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace Banapuchin.Extensions
 {
@@ -22,7 +21,7 @@ namespace Banapuchin.Extensions
                         child.gameObject.Obliterate(out _);
                 }
 
-                Object.Destroy(obj);
+                UnityEngine.Object.Destroy(obj);
             }
 
             result = null;

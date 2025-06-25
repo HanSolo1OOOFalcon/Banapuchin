@@ -1,7 +1,5 @@
-﻿using Banapuchin.Classes;
-using Locomotion;
-using System.Collections.Generic;
-using System;
+using Banapuchin.Classes;
+using Il2CppLocomotion;
 
 namespace Banapuchin.Mods.Movement
 {

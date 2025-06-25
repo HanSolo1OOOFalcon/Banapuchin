@@ -1,8 +1,6 @@
-﻿using Banapuchin.Classes;
+using Banapuchin.Classes;
 using UnityEngine;
-using Locomotion;
-using System;
-using System.Collections.Generic;
+using Il2CppLocomotion;
 using Banapuchin.Mods.Movement;
 
 namespace Banapuchin.Mods.Weird

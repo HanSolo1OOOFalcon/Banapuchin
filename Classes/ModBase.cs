@@ -1,6 +1,5 @@
-﻿using Banapuchin.Main;
-using System;
-using System.Collections.Generic;
+using Banapuchin.Main;
+using Il2Cpp;
 using UnityEngine;
 using static Banapuchin.PublicThingsHerePlease;
 
@@ -15,17 +14,15 @@ namespace Banapuchin.Classes
         public virtual void FixedUpdate() { }
         public virtual void OnEnable()
         {
-            var thing = FusionHub.currentQueue;
-            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
             ButtonObject.GetComponent<Renderer>().material.color = Color.red;
-            Plugin.toInvoke.Add(Update);
-            Plugin.toInvokeFixed.Add(FixedUpdate);
+            MainMod.ToInvoke.Add(Update);
+            MainMod.ToInvokeFixed.Add(FixedUpdate);
         }
         public virtual void OnDisable()
         {
             ButtonObject.GetComponent<Renderer>().material.color = Color.white * 0.75f;
-            Plugin.toInvoke.Remove(Update);
-            Plugin.toInvokeFixed.Remove(FixedUpdate);
+            MainMod.ToInvoke.Remove(Update);
+            MainMod.ToInvokeFixed.Remove(FixedUpdate);
         }
 
         public virtual List<Type> Incompatibilities { get; } = new List<Type>();
@@ -74,17 +71,13 @@ namespace Banapuchin.Classes
 
                 List<Type> mods = new List<Type>();
                 foreach (ModBase mod in ModInstances)
-                {
                     mods.Add(mod.GetType());
-                }
 
                 foreach (Type mod in mods)
                 {
                     ModBase instance = ModInstances.Find(m => m.GetType() == mod);
-                    if (instance.Dependencies.Contains(this.GetType()) && instance.IsEnabled)
-                    {
+                    if (instance.Dependencies.Contains(GetType()) && instance.IsEnabled)
                         instance.OnDisable();
-                    }
                 }
             }
         }

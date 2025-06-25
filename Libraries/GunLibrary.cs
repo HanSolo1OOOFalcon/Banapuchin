@@ -1,6 +1,7 @@
-﻿using Locomotion;
+using Il2CppLocomotion;
 using UnityEngine;
 using Banapuchin.Extensions;
+using Il2Cpp;
 
 namespace Banapuchin.Libraries
 {
@@ -18,7 +19,7 @@ namespace Banapuchin.Libraries
             pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             pointer.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Color");
             pointer.GetComponent<Renderer>().material.color = Color.white * 0.75f;
-            Object.Destroy(pointer.GetComponent<SphereCollider>());
+            UnityEngine.Object.Destroy(pointer.GetComponent<SphereCollider>());
             pointer.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             pointer.SetActive(false);
 
@@ -30,7 +31,7 @@ namespace Banapuchin.Libraries
             line.positionCount = 2;
 
             GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("BananaGun");
-            gunObj = Object.Instantiate(original: foo, parent: Player.Instance.RightHand.transform);
+            gunObj = UnityEngine.Object.Instantiate(original: foo, parent: Player.Instance.RightHand.transform);
             gunObj.transform.localPosition = new Vector3(-0.038f, -0.0325f, 0.012f);
             gunObj.transform.localRotation = Quaternion.Euler(0f, 90f, 45f);
             gunObj.transform.localScale = Vector3.one * 0.175f;
@@ -41,9 +42,10 @@ namespace Banapuchin.Libraries
         public void OnDisable()
         {
             if (pointer != null)
-            {
                 pointer.Obliterate(out pointer);
-            }
+            
+            if (gunObj != null)
+                gunObj.Obliterate(out gunObj);
         }
 
         public void Forever()

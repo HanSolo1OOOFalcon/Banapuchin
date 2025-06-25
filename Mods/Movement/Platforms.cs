@@ -1,6 +1,6 @@
-﻿using Banapuchin.Extensions;
+using Banapuchin.Extensions;
 using UnityEngine;
-using Locomotion;
+using Il2CppLocomotion;
 using Banapuchin.Classes;
 using Banapuchin.Libraries;
 
@@ -25,7 +25,7 @@ namespace Banapuchin.Mods.Movement
         private static GameObject CreatePlat()
         {
             GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("CapuchinHead");
-            GameObject plat = Object.Instantiate(foo);
+            GameObject plat = UnityEngine.Object.Instantiate(foo);
             plat.transform.localScale = Vector3.one * 100f;
             PublicThingsHerePlease.FixShaders(plat);
 

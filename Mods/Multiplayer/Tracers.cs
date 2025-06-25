@@ -1,13 +1,14 @@
-﻿using Banapuchin.Classes;
-using System.Collections.Generic;
+using Banapuchin.Classes;
+using Il2Cpp;
 using UnityEngine;
+using Il2CppLocomotion;
 
 namespace Banapuchin.Mods.Multiplayer
 {
     public class Tracers : ModBase
     {
         public override string Text => "Tracers";
-        
+
         private static List<LineRenderer> _tracers = new List<LineRenderer>();
 
         private const int PointsPerTracer = 100;
@@ -43,7 +44,7 @@ namespace Banapuchin.Mods.Multiplayer
 
                 float currentRadius = BaseRadius + Mathf.Sin(Time.time * PulseSpeed) * PulseAmount;
 
-                Vector3 start = Locomotion.Player.Instance.RightHand.transform.position;
+                Vector3 start = Player.Instance.RightHand.transform.position;
                 Vector3 end = head.transform.position;
 
                 Vector3 direction = (end - start).normalized;
@@ -76,7 +77,7 @@ namespace Banapuchin.Mods.Multiplayer
             {
                 if (tracer != null)
                 {
-                    Object.Destroy(tracer);
+                    UnityEngine.Object.Destroy(tracer);
                 }
             }
 

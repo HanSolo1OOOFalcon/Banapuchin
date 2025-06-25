@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+using Banapuchin.Classes;
+using UnityEngine;
 using UnityEngine.XR;
 
 namespace Banapuchin.Libraries
 {
-    public class HapticLibrary : MonoBehaviour
+    public class HapticLibrary : BetterMonoBehaviour
     {
         public static HapticLibrary instance;
         private bool shouldSendHapticsL, shouldSendHapticsR;

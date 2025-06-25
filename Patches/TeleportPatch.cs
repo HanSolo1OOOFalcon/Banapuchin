@@ -1,13 +1,11 @@
-﻿using Locomotion;
+using Il2CppLocomotion;
 using HarmonyLib;
 using UnityEngine;
-using System.Threading.Tasks;
-using System;
 
 namespace Banapuchin.Patches
 {
     [HarmonyPatch(typeof(Player), "FixedUpdate")]
-    internal class TeleportPatch
+    public class TeleportPatch
     {
         private static bool _isTeleporting;
         private static bool _killVelocity;

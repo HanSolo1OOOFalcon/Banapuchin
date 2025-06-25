@@ -3,7 +3,7 @@ using static Banapuchin.PublicThingsHerePlease;
 
 namespace Banapuchin.Main
 {
-    internal class IrregularButtonMethods
+    public class IrregularButtonMethods
     {
         public static void LastPage()
         {
