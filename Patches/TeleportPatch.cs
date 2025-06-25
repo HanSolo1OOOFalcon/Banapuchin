@@ -9,9 +9,9 @@ namespace Banapuchin.Patches
     [HarmonyPatch(typeof(Player), "FixedUpdate")]
     internal class TeleportPatch
     {
-        static bool _isTeleporting;
-        static bool _killVelocity;
-        static Vector3 _teleportDestination;
+        private static bool _isTeleporting;
+        private static bool _killVelocity;
+        private static Vector3 _teleportDestination;
 
         private static void Postfix(Player __instance)
         {
@@ -26,7 +26,7 @@ namespace Banapuchin.Patches
                     {
                         __instance.playerRigidbody.velocity = Vector3.zero;
                     }
-                    Task.Delay(250).ContinueWith(Task =>
+                    Task.Delay(250).ContinueWith(task =>
                     {
                         _isTeleporting = false;
                         _killVelocity = false;

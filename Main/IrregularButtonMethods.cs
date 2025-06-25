@@ -10,7 +10,7 @@ namespace Banapuchin.Main
             currentPage--;
             if (currentPage < 0)
             {
-                currentPage = Mathf.CeilToInt((float)modInstances.Count/5f) - 1;
+                currentPage = Mathf.CeilToInt(ModInstances.Count/5f) - 1;
             }
             UpdateButtons();
         }
@@ -18,7 +18,7 @@ namespace Banapuchin.Main
         public static void NextPage()
         {
             currentPage++;
-            if (currentPage >= Mathf.CeilToInt((float)modInstances.Count/5f))
+            if (currentPage >= Mathf.CeilToInt(ModInstances.Count/5f))
             {
                 currentPage = 0;
             }

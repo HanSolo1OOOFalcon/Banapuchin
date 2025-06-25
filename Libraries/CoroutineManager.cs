@@ -14,9 +14,6 @@ namespace Banapuchin.Libraries
             return StartCoroutine(routine.WrapToIl2Cpp());
         }
 
-        void Start()
-        {
-            instance = this;
-        }
+        void Start() => instance = this;
     }
 }

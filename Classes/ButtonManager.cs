@@ -1,26 +1,21 @@
-﻿using System;
-using UnityEngine;
-using static Banapuchin.PublicThingsHerePlease;
+﻿using UnityEngine;
 
 namespace Banapuchin.Classes
 {
     public class ButtonManager : BaseButtonManager
     {
-        public ModBase modInstance = null;
+        public ModBase ModInstance = null;
         private AudioSource audio;
 
-        void Start()
-        {
-            audio = GetComponent<AudioSource>();
-        }
-        
+        void Start() => audio = GetComponent<AudioSource>();
+
         protected override void OnTriggerEnter(Collider other)
         {
             base.OnTriggerEnter(other);
             if (isAllowed)
             {
                 isAllowed = false;
-                modInstance.Toggle();
+                ModInstance.Toggle();
                 audio.Play();
             }
         }

@@ -17,14 +17,14 @@ namespace Banapuchin.Main
     [BepInPlugin(PluginInfo.GUID, PluginInfo.Name, PluginInfo.Version)]
     public class Init : BasePlugin
     {
-        public Harmony harmonyInstance;
-        public Plugin pluginInstance;
-        public static Init initInstance;
+        public Harmony HarmonyInstance;
+        public Plugin PluginInstance;
+        public static Init instance;
 
         public override void Load()
         {
-            harmonyInstance = HarmonyPatcher.Patch(PluginInfo.GUID);
-            initInstance = this;
+            HarmonyInstance = HarmonyPatcher.Patch(PluginInfo.GUID);
+            instance = this;
 
             ClassInjector.RegisterTypeInIl2Cpp(typeof(BetterMonoBehaviour));
             var monoTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && typeof(BetterMonoBehaviour).IsAssignableFrom(t) && t != typeof(BetterMonoBehaviour)).ToArray();
@@ -33,7 +33,7 @@ namespace Banapuchin.Main
                 ClassInjector.RegisterTypeInIl2Cpp(type);
             }
 
-            pluginInstance = AddComponent<Plugin>();
+            PluginInstance = AddComponent<Plugin>();
             AddComponent<OnInit>();
             AddComponent<HapticLibrary>();
             AddComponent<CoroutineManager>();
@@ -42,8 +42,8 @@ namespace Banapuchin.Main
 
         public override bool Unload()
         {
-            if (harmonyInstance != null)
-                HarmonyPatcher.Unpatch(harmonyInstance);
+            if (HarmonyInstance != null)
+                HarmonyPatcher.Unpatch(HarmonyInstance);
 
             return true;
         }
@@ -51,7 +51,7 @@ namespace Banapuchin.Main
 
     public class OnInit : MonoBehaviour
     {
-        bool hasDone = false;
+        private bool hasDone;
         
         void Update()
         {

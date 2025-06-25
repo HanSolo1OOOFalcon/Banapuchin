@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
-using System.Linq;
 
 namespace Banapuchin
 {
     internal class PublicThingsHerePlease
     {
-        public static GameObject menu;
-        public static GameObject rBall, lBall;
+        public static GameObject Menu;
+        public static GameObject BallR, BallL;
 
-        public static bool allowed { get; internal set; }
+        public static bool Allowed { get; internal set; }
 
         public static int currentPage = 0;
 
-        public static List<ModBase> modInstances = new List<ModBase>();
+        public static List<ModBase> ModInstances = new List<ModBase>();
 
         public static AssetBundle bundle;
 
@@ -25,7 +24,7 @@ namespace Banapuchin
             var thing = FusionHub.currentQueue;
             if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
             int currentButtonIndex = 0;
-            foreach (var button in modInstances)
+            foreach (var button in ModInstances)
             {
                 int startIndex = currentPage * 5;
                 int endIndex = startIndex + 5;
@@ -73,9 +72,9 @@ namespace Banapuchin
                 buffer = ms.ToArray();
             }
 
-            Il2CppSystem.IO.MemoryStream il2cppStream = new Il2CppSystem.IO.MemoryStream(buffer);
+            Il2CppSystem.IO.MemoryStream il2CPPStream = new Il2CppSystem.IO.MemoryStream(buffer);
 
-            var assetBundle = AssetBundle.LoadFromStream(il2cppStream);
+            var assetBundle = AssetBundle.LoadFromStream(il2CPPStream);
 
             return assetBundle;
         }
@@ -92,7 +91,8 @@ namespace Banapuchin
         }
 
         // the following method will stay here as it saved me from a lot of headaches while monky figured out asset bundles but now that assetbundles are a thing this method is deprecated
-        public static void CreateBanana(out GameObject banana, int segmentCount = 24, float arcRadius = 0.6f, float totalCurveAngle = 60f, float baseRadius = 0.1f, float segmentLength = 0.15f)
+        public static void CreateBanana(out GameObject banana, int segmentCount = 24, float arcRadius = 0.6f,
+            float totalCurveAngle = 60f, float baseRadius = 0.1f, float segmentLength = 0.15f)
         {
             Color bananaYellow = new Color32(251, 255, 135, 255);
             banana = new GameObject("Banana");
@@ -121,7 +121,7 @@ namespace Banapuchin
                 r.material.shader = Shader.Find("Unlit/Color");
                 r.material.color = bananaYellow;
 
-                GameObject.Destroy(segment.GetComponent<Collider>());
+                Object.Destroy(segment.GetComponent<Collider>());
             }
         }
 
@@ -138,6 +138,7 @@ namespace Banapuchin
                 else
                     result += alphabet[(alphabetIndex + 1)];
             }
+
             return result;
         }
     }

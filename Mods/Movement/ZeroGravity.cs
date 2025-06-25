@@ -15,18 +15,16 @@ namespace Banapuchin.Mods.Movement
         public override void OnEnable()
         {
             base.OnEnable();
-            PublicThingsHerePlease.menu.GetComponent<Rigidbody>().useGravity = false;
+            PublicThingsHerePlease.Menu.GetComponent<Rigidbody>().useGravity = false;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            PublicThingsHerePlease.menu.GetComponent<Rigidbody>().useGravity = true;
+            PublicThingsHerePlease.Menu.GetComponent<Rigidbody>().useGravity = true;
         }
 
-        public override void FixedUpdate()
-        {
+        public override void FixedUpdate() =>
             Player.Instance.playerRigidbody.AddForce(-Physics.gravity * Player.Instance.playerRigidbody.mass);
-        }
     }
 }

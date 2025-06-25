@@ -8,8 +8,8 @@ namespace Banapuchin.Mods.Gun
     {
         public override string Text => "Teleport Gun";
 
-        static GunLibrary gun = new GunLibrary();
-        static bool wasFiring;
+        private readonly GunLibrary gun = new GunLibrary();
+        private static bool _wasFiring;
 
         public override void OnEnable()
         {
@@ -26,11 +26,9 @@ namespace Banapuchin.Mods.Gun
         public override void Update()
         {
             gun.Forever();
-            if (gun.isFiring && !wasFiring)
-            {
-                TeleportPatch.TeleportPlayer(gun.hit.point, true);
-            }
-            wasFiring = gun.isFiring;
+            if (gun.IsFiring && !_wasFiring)
+                TeleportPatch.TeleportPlayer(gun.Hit.point, true);
+            _wasFiring = gun.IsFiring;
         }
     }
 }

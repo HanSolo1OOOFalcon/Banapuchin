@@ -13,13 +13,12 @@ namespace Banapuchin.Mods.Gun
         public override string Text => "Spectate Gun";
         public override List<Type> Incompatibilities => new List<Type> { typeof(Thirdperson) };
 
-        static GunLibrary gun = new GunLibrary
+        private readonly GunLibrary gun = new GunLibrary
         {
-            followPlayer = true,
+            FollowPlayer = true,
         };
 
-        static bool wasFiring;
-        static GameObject cameraObj;
+        private static GameObject _cameraObj;
 
         public override void OnEnable()
         {
@@ -36,30 +35,22 @@ namespace Banapuchin.Mods.Gun
         public override void Update()
         {
             gun.Forever();
-            if (gun.isFiring)
+            if (gun.IsFiring && gun.SelectedFusionPlayer != null && _cameraObj == null)
             {
-                if (gun.selectedFusionPlayer != null)
-                {
-                    if (cameraObj == null)
-                    {
-                        cameraObj = new GameObject("SpectateCamera");
-                        Camera camera = cameraObj.AddComponent<Camera>();
-                        camera.fieldOfView = 110f;
-                        camera.nearClipPlane = 0.001f;
-                        cameraObj.transform.SetParent(gun.selectedFusionPlayer.transform.Find("Head"));
-                        cameraObj.transform.localPosition = Vector3.zero;
-                        cameraObj.transform.localRotation = Quaternion.identity;
-                        UnityEngine.Object.DontDestroyOnLoad(cameraObj);
-                    }
-                }
+                _cameraObj = new GameObject("SpectateCamera");
+                Camera camera = _cameraObj.AddComponent<Camera>();
+                camera.fieldOfView = 110f;
+                camera.nearClipPlane = 0.001f;
+                _cameraObj.transform.SetParent(gun.SelectedFusionPlayer.transform.Find("Head"));
+                _cameraObj.transform.localPosition = Vector3.zero;
+                _cameraObj.transform.localRotation = Quaternion.identity;
+                UnityEngine.Object.DontDestroyOnLoad(_cameraObj);
             }
 
-            if (!gun.isFiring && cameraObj != null)
+            if (!gun.IsFiring && _cameraObj != null)
             {
-                cameraObj.Obliterate(out cameraObj);
+                _cameraObj.Obliterate(out _cameraObj);
             }
-
-            wasFiring = gun.isFiring;
         }
     }
 }

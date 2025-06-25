@@ -9,7 +9,7 @@ namespace Banapuchin.Classes
     {
         public float grabDistance = 0.2f;
         private Rigidbody rb;
-        public bool beingHeldR = false, beingHeldL = false;
+        private bool beingHeldR, beingHeldL;
         private Vector3 lastPosition;
         private Vector3 velocity;
 
@@ -46,7 +46,8 @@ namespace Banapuchin.Classes
         {
             if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
             {
-                if (!beingHeldR && Vector3.Distance(Player.Instance.RightHand.transform.position, transform.position) < grabDistance)
+                if (!beingHeldR && Vector3.Distance(Player.Instance.RightHand.transform.position, transform.position) <
+                    grabDistance)
                 {
                     Grab(Player.Instance.RightHand.transform, false);
                     beingHeldR = true;
@@ -54,7 +55,8 @@ namespace Banapuchin.Classes
             }
             else if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip))
             {
-                if (!beingHeldL && Vector3.Distance(Player.Instance.LeftHand.transform.position, transform.position) < grabDistance)
+                if (!beingHeldL && Vector3.Distance(Player.Instance.LeftHand.transform.position, transform.position) <
+                    grabDistance)
                 {
                     Grab(Player.Instance.LeftHand.transform, true);
                     beingHeldL = true;
@@ -70,8 +72,8 @@ namespace Banapuchin.Classes
             beingHeldR = !isLeft;
             lastPosition = transform.parent.position;
 
-            PublicThingsHerePlease.lBall.SetActive(!isLeft);
-            PublicThingsHerePlease.rBall.SetActive(isLeft);
+            BallL.SetActive(!isLeft);
+            BallR.SetActive(isLeft);
         }
 
         void Release(Vector3 throwVelocity)
@@ -82,8 +84,8 @@ namespace Banapuchin.Classes
             beingHeldR = false;
             beingHeldL = false;
 
-            PublicThingsHerePlease.lBall.SetActive(true);
-            PublicThingsHerePlease.rBall.SetActive(true);
+            BallL.SetActive(true);
+            BallR.SetActive(true);
         }
     }
 }

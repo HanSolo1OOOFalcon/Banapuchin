@@ -21,8 +21,8 @@ namespace Banapuchin.Libraries
             leftStickAxis, rightStickAxis,
         }
 
-        private Dictionary<InputType, bool> previousStates = new Dictionary<InputType, bool>();
-        private Dictionary<InputType, bool> currentStates = new Dictionary<InputType, bool>();
+        private readonly Dictionary<InputType, bool> previousStates = new Dictionary<InputType, bool>();
+        private readonly Dictionary<InputType, bool> currentStates = new Dictionary<InputType, bool>();
 
         void Start()
         {

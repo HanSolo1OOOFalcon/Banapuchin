@@ -22,19 +22,21 @@ namespace Banapuchin.Extensions
                         child.gameObject.Obliterate(out _);
                 }
 
-                GameObject.Destroy(obj);
+                Object.Destroy(obj);
             }
 
             result = null;
         }
 
-        public static T SafelyAddComponent<T>(this GameObject obj) where T : Component // I HAD TO RENAME THIS METHOD BECAUSE A SPECIAL SOMEONE WANTS UTILITY FOR THE NOOBS!!!!!!!!!!!!!!!!!!
+        public static T SafelyAddComponent<T>(this GameObject obj)
+            where T : Component // I HAD TO RENAME THIS METHOD BECAUSE A SPECIAL SOMEONE WANTS UTILITY FOR THE NOOBS!!!!!!!!!!!!!!!!!!
         {
             T component = obj.GetComponent<T>();
             if (component == null)
             {
                 component = obj.AddComponent<T>();
             }
+
             return component;
         }
 

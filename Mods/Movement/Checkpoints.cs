@@ -11,25 +11,25 @@ namespace Banapuchin.Mods.Movement
     {
         public override string Text => "Checkpoints";
 
-        static GameObject checkpointObj;
+        private static GameObject _checkpointObj;
 
         public override void OnEnable()
         {
             base.OnEnable();
             GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("Banana");
-            checkpointObj = GameObject.Instantiate(foo);
-            checkpointObj.name = "CheckpointBanana";
-            checkpointObj.transform.localScale = Vector3.one * 8f;
-            PublicThingsHerePlease.FixShaders(checkpointObj);
-            checkpointObj.SetActive(false);
+            _checkpointObj = Object.Instantiate(foo);
+            _checkpointObj.name = "CheckpointBanana";
+            _checkpointObj.transform.localScale = Vector3.one * 8f;
+            PublicThingsHerePlease.FixShaders(_checkpointObj);
+            _checkpointObj.SetActive(false);
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            if (checkpointObj != null)
+            if (_checkpointObj != null)
             {
-                checkpointObj.Obliterate(out checkpointObj);
+                _checkpointObj.Obliterate(out _checkpointObj);
             }
         }
 
@@ -37,14 +37,15 @@ namespace Banapuchin.Mods.Movement
         {
             if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightTrigger))
             {
-                checkpointObj.SetActive(true);
-                checkpointObj.transform.position = Player.Instance.RightHand.transform.position;
-                checkpointObj.transform.rotation = Quaternion.Euler(0f, 0f, 270f);
+                _checkpointObj.SetActive(true);
+                _checkpointObj.transform.position = Player.Instance.RightHand.transform.position;
+                _checkpointObj.transform.rotation = Quaternion.Euler(0f, 0f, 270f);
             }
 
-            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.leftTrigger) && checkpointObj.activeSelf)
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.leftTrigger) &&
+                _checkpointObj.activeSelf)
             {
-                TeleportPatch.TeleportPlayer(checkpointObj.transform.position, true);
+                TeleportPatch.TeleportPlayer(_checkpointObj.transform.position, true);
             }
         }
     }

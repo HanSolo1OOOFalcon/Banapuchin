@@ -1,28 +1,27 @@
 ﻿using Banapuchin.Libraries;
-using Banapuchin.Main;
 using UnityEngine;
 
 namespace Banapuchin.Classes
 {
     public class BaseButtonManager : BetterMonoBehaviour
     {
-        public static float buttonCooldown;
-        public bool isAllowed = false;
+        private static float _buttonCooldown;
+        public bool isAllowed;
 
         protected virtual void OnTriggerEnter(Collider other)
         {
-            if (Time.time > buttonCooldown)
+            if (Time.time > _buttonCooldown)
             {
-                if (other.gameObject == PublicThingsHerePlease.rBall)
+                if (other.gameObject == PublicThingsHerePlease.BallR)
                 {
-                    buttonCooldown = Time.time + 0.2f;
+                    _buttonCooldown = Time.time + 0.2f;
                     HapticLibrary.instance.SendHaptics(0.5f, 0.2f, false);
                     isAllowed = true;
                 }
 
-                if (other.gameObject == PublicThingsHerePlease.lBall)
+                if (other.gameObject == PublicThingsHerePlease.BallL)
                 {
-                    buttonCooldown = Time.time + 0.2f;
+                    _buttonCooldown = Time.time + 0.2f;
                     HapticLibrary.instance.SendHaptics(0.5f, 0.2f, true);
                     isAllowed = true;
                 }

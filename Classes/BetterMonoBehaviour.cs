@@ -7,9 +7,6 @@ namespace Banapuchin.Classes
     {
         // guys trust its better
         // lemme cook and make it better
-        public virtual void IUseArchBTW()
-        {
-            Plugin.instance.WriteLine("i use arch btw", BepInEx.Logging.LogLevel.Warning);
-        }
+        public virtual void IUseArchBTW() => Debug.Log("i use arch btw");
     }
 }

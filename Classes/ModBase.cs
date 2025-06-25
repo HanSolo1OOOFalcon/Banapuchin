@@ -9,7 +9,7 @@ namespace Banapuchin.Classes
     public abstract class ModBase
     {
         public abstract string Text { get; }
-        public bool isEnabled = false;
+        public bool IsEnabled;
 
         public virtual void Update() { }
         public virtual void FixedUpdate() { }
@@ -34,12 +34,12 @@ namespace Banapuchin.Classes
         #region base methods every single mod should have that are called by the button manager component
         public void Toggle()
         {
-            isEnabled = !isEnabled;
+            IsEnabled = !IsEnabled;
 
-            if (isEnabled)
+            if (IsEnabled)
             {
                 List<Type> mods = new List<Type>();
-                foreach (ModBase mod in PublicThingsHerePlease.modInstances)
+                foreach (ModBase mod in ModInstances)
                 {
                     mods.Add(mod.GetType());
                 }
@@ -48,20 +48,20 @@ namespace Banapuchin.Classes
                 {
                     if (Incompatibilities.Contains(mod))
                     {
-                        ModBase instance = PublicThingsHerePlease.modInstances.Find(m => m.GetType() == mod);
-                        if (instance != null && instance.isEnabled)
+                        ModBase instance = ModInstances.Find(m => m.GetType() == mod);
+                        if (instance != null && instance.IsEnabled)
                         {
                             instance.OnDisable();
-                            instance.isEnabled = false;
+                            instance.IsEnabled = false;
                         }
                     }
                     else if (Dependencies.Contains(mod))
                     {
-                        ModBase instance = PublicThingsHerePlease.modInstances.Find(m => m.GetType() == mod);
-                        if (instance != null && !instance.isEnabled)
+                        ModBase instance = ModInstances.Find(m => m.GetType() == mod);
+                        if (instance != null && !instance.IsEnabled)
                         {
                             instance.OnEnable();
-                            instance.isEnabled = true;
+                            instance.IsEnabled = true;
                         }
                     }
                 }
@@ -73,15 +73,15 @@ namespace Banapuchin.Classes
                 OnDisable();
 
                 List<Type> mods = new List<Type>();
-                foreach (ModBase mod in PublicThingsHerePlease.modInstances)
+                foreach (ModBase mod in ModInstances)
                 {
                     mods.Add(mod.GetType());
                 }
 
                 foreach (Type mod in mods)
                 {
-                    ModBase instance = PublicThingsHerePlease.modInstances.Find(m => m.GetType() == mod);
-                    if (instance.Dependencies.Contains(this.GetType()) && instance.isEnabled)
+                    ModBase instance = ModInstances.Find(m => m.GetType() == mod);
+                    if (instance.Dependencies.Contains(this.GetType()) && instance.IsEnabled)
                     {
                         instance.OnDisable();
                     }

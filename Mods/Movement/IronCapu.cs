@@ -4,6 +4,7 @@ using Banapuchin.Libraries;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Object = UnityEngine.Object;
 
 namespace Banapuchin.Mods.Movement
 {
@@ -12,40 +13,43 @@ namespace Banapuchin.Mods.Movement
         public override string Text => "Iron Capu";
         public override List<Type> Incompatibilities => new List<Type> { typeof(WeirdFly) };
 
-        static bool l, r;
-        static ParticleSystem leftParticle, rightParticle;
-        static AudioSource leftAudio, rightAudio;
+        private static bool _left, _right;
+        private static ParticleSystem _leftParticle, _rightParticle;
+        private static AudioSource _leftAudio, _rightAudio;
 
         public override void OnEnable()
         {
             base.OnEnable();
             GameObject particle = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("FireParticles");
-            particle.GetComponent<ParticleSystemRenderer>().material.shader = Shader.Find("Universal Render Pipeline/Particles/Unlit");
+            particle.GetComponent<ParticleSystemRenderer>().material.shader =
+                Shader.Find("Universal Render Pipeline/Particles/Unlit");
             AudioClip fireClip = PublicThingsHerePlease.bundle.LoadAsset<AudioClip>("FlameSound");
 
-            leftParticle = GameObject.Instantiate(particle.GetComponent<ParticleSystem>());
-            leftParticle.transform.SetParent(Player.Instance.LeftHand.transform);
-            leftParticle.transform.localPosition = Vector3.zero;
-            leftParticle.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
-            leftParticle.Stop();
+            _leftParticle = Object.Instantiate(original: particle.GetComponent<ParticleSystem>(),
+                parent: Player.Instance.LeftHand.transform);
+            _leftParticle.transform.localPosition = Vector3.zero;
+            _leftParticle.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
+            _leftParticle.main.simulationSpace = ParticleSystemSimulationSpace.World;
+            _leftParticle.Stop();
 
-            leftAudio = leftParticle.gameObject.AddComponent<AudioSource>();
-            leftAudio.clip = fireClip;
-            leftAudio.loop = true;
-            leftAudio.spatialBlend = 1f;
-            leftAudio.playOnAwake = false;
+            _leftAudio = _leftParticle.gameObject.AddComponent<AudioSource>();
+            _leftAudio.clip = fireClip;
+            _leftAudio.loop = true;
+            _leftAudio.spatialBlend = 1f;
+            _leftAudio.playOnAwake = false;
 
-            rightParticle = GameObject.Instantiate(particle.GetComponent<ParticleSystem>());
-            rightParticle.transform.SetParent(Player.Instance.RightHand.transform);
-            rightParticle.transform.localPosition = Vector3.zero;
-            rightParticle.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
-            rightParticle.Stop();
+            _rightParticle = Object.Instantiate(original: particle.GetComponent<ParticleSystem>(),
+                parent: Player.Instance.RightHand.transform);
+            _rightParticle.transform.localPosition = Vector3.zero;
+            _rightParticle.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
+            _rightParticle.main.simulationSpace = ParticleSystemSimulationSpace.World;
+            _rightParticle.Stop();
 
-            rightAudio = rightParticle.gameObject.AddComponent<AudioSource>();
-            rightAudio.clip = fireClip;
-            rightAudio.loop = true;
-            rightAudio.spatialBlend = 1f;
-            rightAudio.playOnAwake = false;
+            _rightAudio = _rightParticle.gameObject.AddComponent<AudioSource>();
+            _rightAudio.clip = fireClip;
+            _rightAudio.loop = true;
+            _rightAudio.spatialBlend = 1f;
+            _rightAudio.playOnAwake = false;
         }
 
         public override void OnDisable()
@@ -53,58 +57,52 @@ namespace Banapuchin.Mods.Movement
             base.OnDisable();
             HapticLibrary.instance.StopHaptics(false);
             HapticLibrary.instance.StopHaptics(true);
-            GameObject.Destroy(leftParticle.gameObject);
-            GameObject.Destroy(rightParticle.gameObject);
+            Object.Destroy(_leftParticle.gameObject);
+            Object.Destroy(_rightParticle.gameObject);
         }
 
         public override void Update()
         {
             if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
             {
-                Player.Instance.playerRigidbody.AddForce(12f * Player.Instance.RightHand.transform.right, ForceMode.Acceleration);
+                Player.Instance.playerRigidbody.AddForce(12f * Player.Instance.RightHand.transform.right,
+                    ForceMode.Acceleration);
 
-                if (!r)
+                if (!_right)
                 {
-                    r = true;
+                    _right = true;
                     HapticLibrary.instance.StartHaptics(0.7f, false);
-                    rightParticle.transform.SetParent(Player.Instance.RightHand.transform, false);
-                    rightParticle.transform.localPosition = Vector3.zero;
-                    rightParticle.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
-                    rightParticle.Play();
-                    rightAudio.Play();
+                    _rightParticle.Play();
+                    _rightAudio.Play();
                 }
             }
-            else if (r)
+            else if (_right)
             {
-                r = false;
+                _right = false;
                 HapticLibrary.instance.StopHaptics(false);
-                rightParticle.transform.SetParent(null, true);
-                rightParticle.Stop();
-                rightAudio.Stop();
+                _rightParticle.Stop();
+                _rightAudio.Stop();
             }
 
             if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip))
             {
-                Player.Instance.playerRigidbody.AddForce(12f * -Player.Instance.LeftHand.transform.right, ForceMode.Acceleration);
+                Player.Instance.playerRigidbody.AddForce(12f * -Player.Instance.LeftHand.transform.right,
+                    ForceMode.Acceleration);
 
-                if (!l)
+                if (!_left)
                 {
-                    l = true;
+                    _left = true;
                     HapticLibrary.instance.StartHaptics(0.7f, true);
-                    leftParticle.transform.SetParent(Player.Instance.LeftHand.transform, false);
-                    leftParticle.transform.localPosition = Vector3.zero;
-                    leftParticle.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
-                    leftParticle.Play();
-                    leftAudio.Play();
+                    _leftParticle.Play();
+                    _leftAudio.Play();
                 }
             }
-            else if (l)
+            else if (_left)
             {
-                l = false;
+                _left = false;
                 HapticLibrary.instance.StopHaptics(true);
-                leftParticle.transform.SetParent(null, true);
-                leftParticle.Stop();
-                leftAudio.Stop();
+                _leftParticle.Stop();
+                _leftAudio.Stop();
             }
         }
     }

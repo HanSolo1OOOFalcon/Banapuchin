@@ -8,10 +8,7 @@ namespace Banapuchin.Classes
         public Action SpecialAction = null;
         AudioSource clickSound;
 
-        void Start()
-        {
-            clickSound = GetComponent<AudioSource>();
-        }
+        void Start() => clickSound = GetComponent<AudioSource>();
 
         protected override void OnTriggerEnter(Collider other)
         {
@@ -20,7 +17,8 @@ namespace Banapuchin.Classes
             {
                 isAllowed = false;
                 clickSound.Play();
-                SpecialAction?.Invoke(); // people suffering from pneumonoultramicroscopicsilicovolcanoconiosis are very sick i think idk but its like a bone sickness
+                SpecialAction
+                    ?.Invoke(); // people suffering from pneumonoultramicroscopicsilicovolcanoconiosis are very sick i think idk but its like a bone sickness
             }
         }
     }

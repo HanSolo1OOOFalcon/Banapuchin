@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Banapuchin.Extensions;
 using static Banapuchin.PublicThingsHerePlease;
 using Locomotion;
 using Banapuchin.Classes;
@@ -10,31 +9,18 @@ using TMPro;
 using System.Reflection;
 using System.Linq;
 using Banapuchin.Libraries;
-using Fusion;
-
-/*
-Copyright (c) 2025 HanSolo1000Falcon
-
-Licensed under the Anti-Malicious Use Software License (AMUSL) v1.0
-You may obtain a copy of the License at https://github.com/HanSolo1OOOFalcon/amusl-license
-
-This software is provided "as is" without warranty of any kind.
-Use for malicious purposes including game hacking is strictly prohibited.
-*/
+using Banapuchin.Extensions;
 
 namespace Banapuchin.Main
 {
     public class Plugin : MonoBehaviour
     {
-        public static Plugin instance;
-        public void WriteLine(string text, LogLevel severity = LogLevel.Debug) => Init.initInstance.Log.Log(severity, text);
+        public void WriteLine(string text, LogLevel severity = LogLevel.Debug) => Init.instance.Log.Log(severity, text);
         public static List<Action> toInvoke = new List<Action>();
         public static List<Action> toInvokeFixed = new List<Action>();
 
         void Start()
         {
-            instance = this;
-
             Caputilla.CaputillaManager.Instance.OnModdedJoin += OnModdedJoin;
             Caputilla.CaputillaManager.Instance.OnModdedLeave += OnModdedLeave;
         }
@@ -42,21 +28,21 @@ namespace Banapuchin.Main
         static void CreateMenu()
         {
             // boring and not cute whatsoever...
-            if (menu != null) menu.Obliterate(out menu);
+            if (Menu != null) Menu.Obliterate(out Menu);
 
             GameObject menuThing = bundle.LoadAsset<GameObject>("BanapuchinMenu");
-            menu = Instantiate(menuThing);
-            menu.transform.localScale = Vector3.one * 25f;
-            menu.AddComponent<Rigidbody>().isKinematic = false;
-            menu.AddComponent<HoldableObject>();
-            FixShaders(menu);
-            menu.name = "BanapuchinModMenu";
+            Menu = Instantiate(menuThing);
+            Menu.transform.localScale = Vector3.one * 25f;
+            Menu.AddComponent<Rigidbody>().isKinematic = false;
+            Menu.AddComponent<HoldableObject>();
+            FixShaders(Menu);
+            Menu.name = "BanapuchinModMenu";
 
             AudioClip clickSound = bundle.LoadAsset<AudioClip>("ButtonPressWood");
 
             // this shit way too formal yall know i dont follow suite
             GameObject pageL = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            pageL.transform.SetParent(menu.transform);
+            pageL.transform.SetParent(Menu.transform);
             pageL.transform.localScale = new Vector3(0.004f, 0.002f, 0.004f);
             pageL.transform.localRotation = Quaternion.identity;
             pageL.transform.localPosition = new Vector3(0.004f, 0f, 0.012f);
@@ -66,7 +52,7 @@ namespace Banapuchin.Main
             pageL.AddComponent<IrregularButtonManager>().SpecialAction = () => IrregularButtonMethods.LastPage();
 
             GameObject pageR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            pageR.transform.SetParent(menu.transform);
+            pageR.transform.SetParent(Menu.transform);
             pageR.transform.localScale = new Vector3(0.004f, 0.002f, 0.004f);
             pageR.transform.localRotation = Quaternion.identity;
             pageR.transform.localPosition = new Vector3(-0.004f, 0f, 0.012f);
@@ -76,32 +62,34 @@ namespace Banapuchin.Main
             pageR.AddComponent<IrregularButtonManager>().SpecialAction = () => IrregularButtonMethods.NextPage();
 
             // SUPER CUTE CAT IMAGES YAYAYAYAYAYAYAYAYAYAYAY
-            LoadImageInto3DWorldSpace("Banapuchin.Assets.Cats.MonkyCar.jpg", menu.transform, new Vector3(0f, 0.0019f, 0f), Quaternion.Euler(90f, 0f, 0f), Vector3.one * 0.01f);
+            LoadImageInto3DWorldSpace("Banapuchin.Assets.Cats.MonkyCar.jpg", Menu.transform,
+                new Vector3(0f, 0.0019f, 0f), Quaternion.Euler(90f, 0f, 0f), Vector3.one * 0.01f);
 
             // butts (haha i said funneh word)
-            var ModBaseType = typeof(ModBase);
-            var Mods = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(ModBaseType)).ToArray();
-            Plugin.instance.WriteLine($"Loaded {Mods.Length} mods, if this seems incorrect then you fucked up. Maybe try inheriting from the class?", LogLevel.Warning);
+            var mods = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(ModBase))).ToArray();
+            Debug.Log(
+                $"Loaded {mods.Length} mods, if this seems incorrect then you fucked up. Maybe try inheriting from the class?");
             GameObject buttonPrefab = bundle.LoadAsset<GameObject>("BanapuchinButton");
 
-            for (int buttonIndex = 0; buttonIndex < Mods.Length; buttonIndex++)
+            for (int buttonIndex = 0; buttonIndex < mods.Length; buttonIndex++)
             {
                 float offset = 0.003f * (buttonIndex % 5);
 
-                Type modType = Mods[buttonIndex];
+                Type modType = mods[buttonIndex];
                 ModBase instance = (ModBase)Activator.CreateInstance(modType);
 
-                modInstances.Add(instance);
+                ModInstances.Add(instance);
 
                 CreateButton(offset, instance, buttonPrefab, clickSound);
             }
+
             UpdateButtons();
         }
 
         static void CreateButton(float offset, ModBase instance, GameObject toInstantiate, AudioClip clickSound)
         {
-            GameObject button = Instantiate(toInstantiate);
-            button.transform.SetParent(menu.transform);
+            GameObject button = Instantiate(original: toInstantiate, parent: Menu.transform);
             button.name = instance.Text;
             button.transform.localRotation = Quaternion.Euler(90f, 90f, 0f);
             button.transform.localScale = Vector3.one * 0.12f;
@@ -114,13 +102,15 @@ namespace Banapuchin.Main
             button.GetComponent<AudioSource>().playOnAwake = false;
 
             ButtonManager buttonManager = button.AddComponent<ButtonManager>();
-            buttonManager.modInstance = instance;
+            buttonManager.ModInstance = instance;
 
             instance.ButtonObject = button;
-            CreateTextLabel(instance.Text, button.transform, new Vector3(0f, 0f, 0.007f), Quaternion.Euler(0f, 180f, 270f), 0.125f);
+            CreateTextLabel(instance.Text, button.transform, new Vector3(0f, 0f, 0.007f),
+                Quaternion.Euler(0f, 180f, 270f), 0.125f);
         }
 
-        private static GameObject CreateTextLabel(string text, Transform parent, Vector3 pos, Quaternion rot, float size)
+        private static GameObject CreateTextLabel(string text, Transform parent, Vector3 pos, Quaternion rot,
+            float size)
         {
             GameObject gameObject = new GameObject("TMP_" + text);
             gameObject.transform.SetParent(parent);
@@ -134,31 +124,33 @@ namespace Banapuchin.Main
             tmp.color = Color.white;
             tmp.alignment = TextAlignmentOptions.Center;
             tmp.enableAutoSizing = false;
+
             return gameObject;
         }
 
         static void CreateBalls()
         {
-            rBall = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            rBall.name = "RightBall";
-            rBall.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
-            rBall.GetComponent<Renderer>().enabled = false;
-            rBall.SafelyAddComponent<Rigidbody>().isKinematic = true;
-            rBall.GetComponent<SphereCollider>().isTrigger = true;
-            rBall.transform.SetParent(Player.Instance.RightHand.transform);
-            rBall.transform.localPosition = new Vector3(-0.02f, -0.1f, 0.09f);
+            BallR = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            BallR.name = "RightBall";
+            BallR.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+            BallR.GetComponent<Renderer>().enabled = false;
+            BallR.SafelyAddComponent<Rigidbody>().isKinematic = true;
+            BallR.GetComponent<SphereCollider>().isTrigger = true;
+            BallR.transform.SetParent(Player.Instance.RightHand.transform);
+            BallR.transform.localPosition = new Vector3(-0.02f, -0.1f, 0.09f);
 
-            lBall = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            lBall.name = "LeftBall";
-            lBall.transform.localScale = rBall.transform.localScale;
-            lBall.GetComponent<Renderer>().enabled = false;
-            lBall.SafelyAddComponent<Rigidbody>().isKinematic = true;
-            lBall.GetComponent<SphereCollider>().isTrigger = true;
-            lBall.transform.SetParent(Player.Instance.LeftHand.transform);
-            lBall.transform.localPosition = new Vector3(0.045f, -0.141f, 0.052f);
+            BallL = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            BallL.name = "LeftBall";
+            BallL.transform.localScale = BallR.transform.localScale;
+            BallL.GetComponent<Renderer>().enabled = false;
+            BallL.SafelyAddComponent<Rigidbody>().isKinematic = true;
+            BallL.GetComponent<SphereCollider>().isTrigger = true;
+            BallL.transform.SetParent(Player.Instance.LeftHand.transform);
+            BallL.transform.localPosition = new Vector3(0.045f, -0.141f, 0.052f);
         }
 
-        static void LoadImageInto3DWorldSpace(string imagePath, Transform parent, Vector3 position, Quaternion rotation, Vector3 scale)
+        static void LoadImageInto3DWorldSpace(string imagePath, Transform parent, Vector3 position, Quaternion rotation,
+            Vector3 scale)
         {
             GameObject foo = GameObject.CreatePrimitive(PrimitiveType.Quad);
             foo.name = imagePath;
@@ -177,67 +169,61 @@ namespace Banapuchin.Main
 
         public static void OnModdedJoin()
         {
-            allowed = true;
+            Allowed = true;
             CreateMenu();
             CreateBalls();
         }
 
         public static void OnModdedLeave()
         {
-            allowed = false;
+            Allowed = false;
 
-            foreach (ModBase mod in modInstances)
+            foreach (ModBase mod in ModInstances)
             {
-                if (mod.isEnabled)
-                {
-                    mod.OnDisable();
-                    mod.isEnabled = false;
-                }
+                if (mod.IsEnabled)
+                    mod.Toggle();
             }
 
-            menu.Obliterate(out menu);
-            rBall.Obliterate(out rBall);
-            lBall.Obliterate(out lBall);
-            modInstances.Clear();
+            Menu.Obliterate(out Menu);
+            BallR.Obliterate(out BallR);
+            BallL.Obliterate(out BallL);
+            ModInstances.Clear();
         }
 
         void Update()
         {
-            if (!allowed) 
+            if (!Allowed)
                 return;
 
             if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightSecondaryButton))
             {
-                menu.GetComponent<Rigidbody>().isKinematic = true;
-                menu.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
-                menu.transform.localPosition = new Vector3(0f, -0.04f, 0.6f);
-                menu.transform.localRotation = Quaternion.Euler(270f, 180f, 0f);
-                menu.transform.localScale = Vector3.one * 25f;
-                lBall.SetActive(true);
-                rBall.SetActive(true);
-                menu.SetActive(true);
+                Menu.GetComponent<Rigidbody>().isKinematic = true;
+                Menu.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
+                Menu.transform.localPosition = new Vector3(0f, -0.04f, 0.6f);
+                Menu.transform.localRotation = Quaternion.Euler(270f, 180f, 0f);
+                Menu.transform.localScale = Vector3.one * 25f;
+                BallL.SetActive(true);
+                BallR.SetActive(true);
+                Menu.SetActive(true);
             }
 
-            if (!menu.GetComponent<Rigidbody>().isKinematic)
+            if (!Menu.GetComponent<Rigidbody>().isKinematic)
             {
-                lBall.SetActive(false);
-                rBall.SetActive(false);
+                BallL.SetActive(false);
+                BallR.SetActive(false);
             }
 
             foreach (Action action in toInvoke)
-            {
                 action.Invoke();
-            }
         }
 
         void FixedUpdate()
         {
-            if (!allowed) 
+            if (!Allowed)
                 return;
+
             foreach (Action action in toInvokeFixed)
-            {
                 action.Invoke();
-            }
         }
     }
 }

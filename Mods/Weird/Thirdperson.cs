@@ -13,25 +13,25 @@ namespace Banapuchin.Mods.Weird
         public override string Text => "Third Person";
         public override List<Type> Incompatibilities => new List<Type> { typeof(SpectateGun) };
 
-        static GameObject cameraObj;
+        private static GameObject _cameraObj;
 
         public override void OnEnable()
         {
             base.OnEnable();
-            cameraObj = new GameObject("SpectateCamera");
-            Camera camera = cameraObj.AddComponent<Camera>();
+            _cameraObj = new GameObject("SpectateCamera");
+            Camera camera = _cameraObj.AddComponent<Camera>();
             camera.fieldOfView = 110f;
             camera.nearClipPlane = 0.001f;
-            cameraObj.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
-            cameraObj.transform.localPosition = new Vector3(0f, 0f, -2f);
-            cameraObj.transform.localRotation = Quaternion.identity;
-            UnityEngine.Object.DontDestroyOnLoad(cameraObj);
+            _cameraObj.transform.SetParent(Player.Instance.playerCam.gameObject.transform);
+            _cameraObj.transform.localPosition = new Vector3(0f, 0f, -2f);
+            _cameraObj.transform.localRotation = Quaternion.identity;
+            UnityEngine.Object.DontDestroyOnLoad(_cameraObj);
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            cameraObj.Obliterate(out cameraObj);
+            _cameraObj.Obliterate(out _cameraObj);
         }
     }
 }

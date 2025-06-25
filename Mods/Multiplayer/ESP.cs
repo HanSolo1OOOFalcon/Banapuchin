@@ -6,6 +6,7 @@ namespace Banapuchin.Mods.Multiplayer
     public class ESP : ModBase
     {
         public override string Text => "ESP";
+        
         public override void OnEnable()
         {
             base.OnEnable();

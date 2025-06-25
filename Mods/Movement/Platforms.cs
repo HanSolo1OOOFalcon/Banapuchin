@@ -10,22 +10,22 @@ namespace Banapuchin.Mods.Movement
     {
         public override string Text => "Platforms";
 
-        public static GameObject lPlat, rPlat;
+        private static GameObject _lPlat, _rPlat;
 
         public override void OnDisable()
         {
             base.OnDisable();
-            if (lPlat != null)
-                lPlat.Obliterate(out lPlat);
+            if (_lPlat != null)
+                _lPlat.Obliterate(out _lPlat);
 
-            if (rPlat != null)
-                rPlat.Obliterate(out rPlat);
+            if (_rPlat != null)
+                _rPlat.Obliterate(out _rPlat);
         }
 
         private static GameObject CreatePlat()
         {
             GameObject foo = PublicThingsHerePlease.bundle.LoadAsset<GameObject>("CapuchinHead");
-            GameObject plat = GameObject.Instantiate(foo);
+            GameObject plat = Object.Instantiate(foo);
             plat.transform.localScale = Vector3.one * 100f;
             PublicThingsHerePlease.FixShaders(plat);
 
@@ -42,35 +42,35 @@ namespace Banapuchin.Mods.Movement
         public override void OnEnable()
         {
             base.OnEnable();
-            lPlat.Obliterate(out lPlat);
-            lPlat = CreatePlat();
+            _lPlat.Obliterate(out _lPlat);
+            _lPlat = CreatePlat();
 
-            rPlat.Obliterate(out rPlat);
-            rPlat = CreatePlat();
+            _rPlat.Obliterate(out _rPlat);
+            _rPlat = CreatePlat();
         }
 
         public override void Update()
         {
             if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.leftGrip))
             {
-                lPlat.SetActive(true);
-                lPlat.transform.position = Player.Instance.LeftHand.transform.position + Vector3.down * 0.2f;
-                lPlat.transform.rotation = Player.Instance.LeftHand.transform.rotation;
+                _lPlat.SetActive(true);
+                _lPlat.transform.position = Player.Instance.LeftHand.transform.position + Vector3.down * 0.2f;
+                _lPlat.transform.rotation = Player.Instance.LeftHand.transform.rotation;
             }
             else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.leftGrip))
             {
-                lPlat.SetActive(false);
+                _lPlat.SetActive(false);
             }
 
             if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightGrip))
             {
-                rPlat.SetActive(true);
-                rPlat.transform.position = Player.Instance.RightHand.transform.position + Vector3.down * 0.2f;
-                rPlat.transform.rotation = Player.Instance.RightHand.transform.rotation;
+                _rPlat.SetActive(true);
+                _rPlat.transform.position = Player.Instance.RightHand.transform.position + Vector3.down * 0.2f;
+                _rPlat.transform.rotation = Player.Instance.RightHand.transform.rotation;
             }
             else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.rightGrip))
             {
-                rPlat.SetActive(false);
+                _rPlat.SetActive(false);
             }
         }
     }
