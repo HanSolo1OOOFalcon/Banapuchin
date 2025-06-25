@@ -40,9 +40,9 @@ namespace Banapuchin.Extensions
             return component;
         }
 
-        public static void Reset(this GameObject go)
+        public static void Reset(this GameObject go) // idk why i added this method, i have never used it.
         {
-            go.transform.parent = null;
+            go.transform.parent.SetParent(null);
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.identity;
             go.transform.localScale = Vector3.one;
