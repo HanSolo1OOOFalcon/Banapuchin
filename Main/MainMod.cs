@@ -43,8 +43,8 @@ namespace Banapuchin.Main
 
             bundle = LoadAssetBundle("Banapuchin.Assets.modmenu");
 
-            Bouncy.normal = Player.Instance.climbDrag;
-            UltraBouncy.normal = Player.Instance.climbDrag;
+            Bouncy.Normal = Player.Instance.climbDrag;
+            UltraBouncy.Normal = Player.Instance.climbDrag;
         }
 
         private static void CreateMenu()

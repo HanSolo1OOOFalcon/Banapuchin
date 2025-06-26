@@ -8,7 +8,7 @@ namespace Banapuchin.Mods.Movement
         public override string Text => "Ultra Bouncy";
         public override List<Type> Incompatibilities => new List<Type> { typeof(Bouncy) };
 
-        public static float normal;
+        public static float Normal;
 
         public override void OnEnable()
         {
@@ -19,7 +19,7 @@ namespace Banapuchin.Mods.Movement
         public override void OnDisable()
         {
             base.OnDisable();
-            Player.Instance.climbDrag = normal;
+            Player.Instance.climbDrag = Normal;
         }
     }
 }
