@@ -13,14 +13,14 @@ namespace Banapuchin.Mods.Weird
         public override void OnEnable()
         {
             base.OnEnable();
-            Player.Instance.transform.position += Vector3.up * Player.Instance.scale;
+            Player.Instance.transform.position += Vector3.up * Player.Instance.scale * 2f;
             Player.Instance.transform.Rotate(Vector3.right, 180, Space.Self);
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            Player.Instance.transform.position += Vector3.down * Player.Instance.scale;
+            Player.Instance.transform.position += Vector3.down * Player.Instance.scale * 2f;
             Player.Instance.transform.Rotate(Vector3.right, -180, Space.Self);
         }
 

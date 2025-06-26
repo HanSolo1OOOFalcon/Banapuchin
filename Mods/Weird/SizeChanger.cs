@@ -12,11 +12,11 @@ namespace Banapuchin.Mods.Weird
 
         public override void Update()
         {
-            if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightTrigger))
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.RightTrigger))
             {
                 Player.Instance.scale += Player.Instance.scale * 0.01f;
             }
-            else if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftTrigger))
+            else if (ControllerInput.instance.GetInput(ControllerInput.InputType.LeftTrigger))
             {
                 Player.Instance.scale -= Player.Instance.scale * 0.01f;
                 if (Player.Instance.scale < 0.01f)

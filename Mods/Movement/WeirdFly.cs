@@ -13,8 +13,8 @@ namespace Banapuchin.Mods.Movement
 
         public override void Update()
         {
-            if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip) &&
-                ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.LeftGrip) &&
+                ControllerInput.instance.GetInput(ControllerInput.InputType.RightGrip))
             {
                 float magnitude =
                     (Player.Instance.LeftHand.transform.position - Player.Instance.RightHand.transform.position)

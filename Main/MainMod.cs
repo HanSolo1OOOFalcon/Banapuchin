@@ -40,7 +40,6 @@ namespace Banapuchin.Main
             GameObject addComponentsToMe = new GameObject("BanapuchinComponents");
             addComponentsToMe.AddComponent<HapticLibrary>();
             addComponentsToMe.AddComponent<ControllerInput>();
-            addComponentsToMe.AddComponent<CoroutineManager>();
 
             bundle = LoadAssetBundle("Banapuchin.Assets.modmenu");
 
@@ -219,7 +218,7 @@ namespace Banapuchin.Main
             if (!Allowed)
                 return;
 
-            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightSecondaryButton))
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.RightSecondaryButton))
             {
                 Menu.GetComponent<Rigidbody>().isKinematic = true;
                 Menu.transform.SetParent(Player.Instance.playerCam.gameObject.transform);

@@ -51,24 +51,24 @@ namespace Banapuchin.Mods.Movement
 
         public override void Update()
         {
-            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.leftGrip))
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.LeftGrip))
             {
                 _lPlat.SetActive(true);
                 _lPlat.transform.position = Player.Instance.LeftHand.transform.position + Vector3.down * 0.2f;
                 _lPlat.transform.rotation = Player.Instance.LeftHand.transform.rotation;
             }
-            else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.leftGrip))
+            else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.LeftGrip))
             {
                 _lPlat.SetActive(false);
             }
 
-            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightGrip))
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.RightGrip))
             {
                 _rPlat.SetActive(true);
                 _rPlat.transform.position = Player.Instance.RightHand.transform.position + Vector3.down * 0.2f;
                 _rPlat.transform.rotation = Player.Instance.RightHand.transform.rotation;
             }
-            else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.rightGrip))
+            else if (ControllerInput.instance.GetInputUp(ControllerInput.InputType.RightGrip))
             {
                 _rPlat.SetActive(false);
             }

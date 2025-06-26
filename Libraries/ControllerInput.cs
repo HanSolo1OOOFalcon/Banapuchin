@@ -10,15 +10,15 @@ namespace Banapuchin.Libraries
 
         public enum InputType
         {
-            leftGrip, rightGrip,
-            leftTrigger, rightTrigger,
-            leftPrimaryButton, rightPrimaryButton,
-            leftSecondaryButton, rightSecondaryButton,
+            LeftGrip, RightGrip,
+            LeftTrigger, RightTrigger,
+            LeftPrimaryButton, RightPrimaryButton,
+            LeftSecondaryButton, RightSecondaryButton,
         }
 
         public enum StickTypes
         {
-            leftStickAxis, rightStickAxis,
+            LeftStickAxis, RightStickAxis,
         }
 
         private readonly Dictionary<InputType, bool> previousStates = new Dictionary<InputType, bool>();
@@ -48,34 +48,34 @@ namespace Banapuchin.Libraries
         {
             switch (wantedInput)
             {
-                case InputType.leftGrip:
+                case InputType.LeftGrip:
                     return InputDevices.GetDeviceAtXRNode(XRNode.LeftHand)
-                        .TryGetFeatureValue(CommonUsages.gripButton, out bool leftGrip) && leftGrip;
-                case InputType.rightGrip:
+                        .TryGetFeatureValue(CommonUsages.gripButton, out bool LeftGrip) && LeftGrip;
+                case InputType.RightGrip:
                     return InputDevices.GetDeviceAtXRNode(XRNode.RightHand)
-                        .TryGetFeatureValue(CommonUsages.gripButton, out bool rightGrip) && rightGrip;
-                case InputType.leftTrigger:
+                        .TryGetFeatureValue(CommonUsages.gripButton, out bool RightGrip) && RightGrip;
+                case InputType.LeftTrigger:
                     return InputDevices.GetDeviceAtXRNode(XRNode.LeftHand)
-                        .TryGetFeatureValue(CommonUsages.triggerButton, out bool leftTrigger) && leftTrigger;
-                case InputType.rightTrigger:
+                        .TryGetFeatureValue(CommonUsages.triggerButton, out bool LeftTrigger) && LeftTrigger;
+                case InputType.RightTrigger:
                     return InputDevices.GetDeviceAtXRNode(XRNode.RightHand)
-                        .TryGetFeatureValue(CommonUsages.triggerButton, out bool rightTrigger) && rightTrigger;
-                case InputType.leftPrimaryButton:
+                        .TryGetFeatureValue(CommonUsages.triggerButton, out bool RightTrigger) && RightTrigger;
+                case InputType.LeftPrimaryButton:
                     return InputDevices.GetDeviceAtXRNode(XRNode.LeftHand)
-                               .TryGetFeatureValue(CommonUsages.primaryButton, out bool leftPrimaryButton) &&
-                           leftPrimaryButton;
-                case InputType.rightPrimaryButton:
+                               .TryGetFeatureValue(CommonUsages.primaryButton, out bool LeftPrimaryButton) &&
+                           LeftPrimaryButton;
+                case InputType.RightPrimaryButton:
                     return InputDevices.GetDeviceAtXRNode(XRNode.RightHand)
-                               .TryGetFeatureValue(CommonUsages.primaryButton, out bool rightPrimaryButton) &&
-                           rightPrimaryButton;
-                case InputType.leftSecondaryButton:
+                               .TryGetFeatureValue(CommonUsages.primaryButton, out bool RightPrimaryButton) &&
+                           RightPrimaryButton;
+                case InputType.LeftSecondaryButton:
                     return InputDevices.GetDeviceAtXRNode(XRNode.LeftHand)
-                               .TryGetFeatureValue(CommonUsages.secondaryButton, out bool leftSecondaryButton) &&
-                           leftSecondaryButton;
-                case InputType.rightSecondaryButton:
+                               .TryGetFeatureValue(CommonUsages.secondaryButton, out bool LeftSecondaryButton) &&
+                           LeftSecondaryButton;
+                case InputType.RightSecondaryButton:
                     return InputDevices.GetDeviceAtXRNode(XRNode.RightHand)
-                               .TryGetFeatureValue(CommonUsages.secondaryButton, out bool rightSecondaryButton) &&
-                           rightSecondaryButton;
+                               .TryGetFeatureValue(CommonUsages.secondaryButton, out bool RightSecondaryButton) &&
+                           RightSecondaryButton;
             }
 
             return false;
@@ -100,14 +100,14 @@ namespace Banapuchin.Libraries
         {
             switch (wantedAxis)
             {
-                case StickTypes.leftStickAxis:
+                case StickTypes.LeftStickAxis:
                     InputDevices.GetDeviceAtXRNode(XRNode.LeftHand)
-                        .TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 leftAxis);
-                    return leftAxis;
-                case StickTypes.rightStickAxis:
+                        .TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 LeftAxis);
+                    return LeftAxis;
+                case StickTypes.RightStickAxis:
                     InputDevices.GetDeviceAtXRNode(XRNode.RightHand)
-                        .TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 rightAxis);
-                    return rightAxis;
+                        .TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 RightAxis);
+                    return RightAxis;
             }
 
             return Vector2.zero;

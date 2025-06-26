@@ -61,7 +61,7 @@ namespace Banapuchin.Mods.Movement
 
         public override void Update()
         {
-            if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.RightGrip))
             {
                 Player.Instance.playerRigidbody.AddForce(12f * Player.Instance.RightHand.transform.right,
                     ForceMode.Acceleration);
@@ -82,7 +82,7 @@ namespace Banapuchin.Mods.Movement
                 _rightAudio.Stop();
             }
 
-            if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip))
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.LeftGrip))
             {
                 Player.Instance.playerRigidbody.AddForce(12f * -Player.Instance.LeftHand.transform.right,
                     ForceMode.Acceleration);

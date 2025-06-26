@@ -32,11 +32,11 @@ namespace Banapuchin.Classes
                 velocity = (transform.position - lastPosition) / Time.deltaTime;
                 lastPosition = transform.position;
 
-                if (beingHeldR && !ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
+                if (beingHeldR && !ControllerInput.instance.GetInput(ControllerInput.InputType.RightGrip))
                 {
                     Release(velocity);
                 }
-                else if (beingHeldL && !ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip))
+                else if (beingHeldL && !ControllerInput.instance.GetInput(ControllerInput.InputType.LeftGrip))
                 {
                     Release(velocity);
                 }
@@ -45,7 +45,7 @@ namespace Banapuchin.Classes
 
         void TryGrab()
         {
-            if (ControllerInput.instance.GetInput(ControllerInput.InputType.rightGrip))
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.RightGrip))
             {
                 if (!beingHeldR && Vector3.Distance(Player.Instance.RightHand.transform.position, transform.position) <
                     grabDistance)
@@ -54,7 +54,7 @@ namespace Banapuchin.Classes
                     beingHeldR = true;
                 }
             }
-            else if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftGrip))
+            else if (ControllerInput.instance.GetInput(ControllerInput.InputType.LeftGrip))
             {
                 if (!beingHeldL && Vector3.Distance(Player.Instance.LeftHand.transform.position, transform.position) <
                     grabDistance)

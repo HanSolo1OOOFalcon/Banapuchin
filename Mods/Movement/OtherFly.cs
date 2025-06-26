@@ -12,7 +12,7 @@ namespace Banapuchin.Mods.Movement
 
         public override void Update()
         {
-            if (ControllerInput.instance.GetInput(ControllerInput.InputType.leftPrimaryButton))
+            if (ControllerInput.instance.GetInput(ControllerInput.InputType.LeftPrimaryButton))
             {
                 Player.Instance.transform.position += Player.Instance.playerCam.transform.forward * 0.5f;
                 Player.Instance.playerRigidbody.velocity = Vector3.zero;

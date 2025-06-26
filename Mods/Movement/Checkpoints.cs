@@ -35,18 +35,15 @@ namespace Banapuchin.Mods.Movement
 
         public override void Update()
         {
-            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.rightTrigger))
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.RightTrigger))
             {
                 _checkpointObj.SetActive(true);
                 _checkpointObj.transform.position = Player.Instance.RightHand.transform.position;
                 _checkpointObj.transform.rotation = Quaternion.Euler(0f, 0f, 270f);
             }
 
-            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.leftTrigger) &&
-                _checkpointObj.activeSelf)
-            {
+            if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.LeftTrigger) && _checkpointObj.activeSelf)
                 TeleportPatch.TeleportPlayer(_checkpointObj.transform.position, true);
-            }
         }
     }
 }
