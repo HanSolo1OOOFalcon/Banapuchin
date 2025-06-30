@@ -32,7 +32,7 @@ namespace Banapuchin.Mods.Gun
 
         public override void Update()
         {
-            gun.Forever();
+            gun.Update();
             if (gun.IsFiring && gun.SelectedFusionPlayer != null && _cameraObj == null)
             {
                 _cameraObj = new GameObject("SpectateCamera");

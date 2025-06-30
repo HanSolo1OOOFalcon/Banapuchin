@@ -1,4 +1,5 @@
 using Banapuchin.Libraries;
+using Il2Cpp;
 using UnityEngine;
 
 namespace Banapuchin.Classes

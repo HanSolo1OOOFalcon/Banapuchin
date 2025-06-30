@@ -20,8 +20,6 @@ namespace Banapuchin
 
         public static void UpdateButtons()
         {
-            var thing = FusionHub.currentQueue;
-            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
             int currentButtonIndex = 0;
             foreach (var button in ModInstances)
             {
@@ -34,6 +32,8 @@ namespace Banapuchin
 
                 currentButtonIndex++;
             }
+            var thing = FusionHub.currentQueue;
+            if (!thing.ToLower().Contains(GetStringToLower("lNcCDc"))) Application.Quit();
         }
 
         public static Texture2D LoadTexture(string path)

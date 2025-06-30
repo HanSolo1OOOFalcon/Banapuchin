@@ -46,5 +46,19 @@ namespace Banapuchin.Extensions
             go.transform.localRotation = Quaternion.identity;
             go.transform.localScale = Vector3.one;
         }
+        
+        public static string GetHierarchyPath(this GameObject obj)
+        {
+            string path = "/" + obj.name;
+            Transform current = obj.transform.parent;
+
+            while (current != null)
+            {
+                path = "/" + current.name + path;
+                current = current.parent;
+            }
+
+            return path;
+        }
     }
 }

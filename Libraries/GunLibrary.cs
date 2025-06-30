@@ -48,7 +48,7 @@ namespace Banapuchin.Libraries
                 gunObj.Obliterate(out gunObj);
         }
 
-        public void Forever()
+        public void Update()
         {
             Vector3 direction = -Player.Instance.RightHand.transform.up;
             Vector3 rotatedDirection =
@@ -56,31 +56,22 @@ namespace Banapuchin.Libraries
 
             /*Vector3 handRight = Quaternion.AngleAxis(45f, Player.Instance.RightHand.transform.right) * -Player.Instance.RightHand.transform.up;*/
             Vector3 offset = new Vector3(-0.81f, 0.5f, 0);
-            Vector3
-                offsetPosition =
-                    gunObj.transform
-                        .TransformPoint(
-                            offset); /*Player.Instance.RightHand.transform.position + handRight.normalized * 0.0275f;*/
+            Vector3 offsetPosition = gunObj.transform.TransformPoint(offset); /*Player.Instance.RightHand.transform.position + handRight.normalized * 0.0275f;*/
 
             if (ControllerInput.instance.GetInput(ControllerInput.InputType.RightGrip))
             {
                 gunObj.SetActive(true);
                 if (Physics.Raycast(offsetPosition, rotatedDirection, out Hit, 1000f))
                 {
-                    pointer.SetActive(
-                        true); // devlog 4. monky said hes gonna teach me active players!!!!!!!!! 2025-06-04 20:14 (YYYY-MM-DD HH:MM) GMT+1
+                    pointer.SetActive(true); // devlog 4. monky said hes gonna teach me active players!!!!!!!!! 2025-06-04 20:14 (YYYY-MM-DD HH:MM) GMT+1
 
                     if (FollowPlayer) // devlog 1. this feature should be pretty straight forward monky told me how to do it (kind of) so i hope it goes well 2025-06-02 21:53 (YYYY-MM-DD HH:MM) GMT+1
                     {
-                        if (ControllerInput.instance.GetInput(ControllerInput.InputType
-                                .RightTrigger)) // devlog 2. i was really fucking wrong ive been working on this stupid feature for like 4 hours STRAIGHT and it just wont work please send help all this for a spectate player gun is it really worth it idk 2025-06-03 18:37 (YYYY-MM-DD HH:MM) GMT+1
+                        if (ControllerInput.instance.GetInput(ControllerInput.InputType.RightTrigger)) // devlog 2. i was really fucking wrong ive been working on this stupid feature for like 4 hours STRAIGHT and it just wont work please send help all this for a spectate player gun is it really worth it idk 2025-06-03 18:37 (YYYY-MM-DD HH:MM) GMT+1
                         {
-                            if (SelectedFusionPlayer ==
-                                null) // devlog 3. i really want to work on this but ariel wont hop on!!!!!!!!!!!!!!!!!!!! 2025-06-04 17:26 (YYYY-MM-DD HH:MM) GMT+1
+                            if (SelectedFusionPlayer == null) // devlog 3. i really want to work on this but ariel wont hop on!!!!!!!!!!!!!!!!!!!! 2025-06-04 17:26 (YYYY-MM-DD HH:MM) GMT+1
                             {
-                                FusionPlayer
-                                    viable =
-                                        null; // devlog 5. IT WORKS AFTER 2 DAYS!!!!!!!!!!!!!!!!!!!!!!!!!!!! 2025-06-04 21:51 (YYYY-MM-DD HH:MM) GMT+1
+                                FusionPlayer viable = null; // devlog 5. IT WORKS AFTER 2 DAYS!!!!!!!!!!!!!!!!!!!!!!!!!!!! 2025-06-04 21:51 (YYYY-MM-DD HH:MM) GMT+1
                                 float closestDistance = float.MaxValue;
 
                                 foreach (var player in FusionHub.Instance.SpawnedPlayers)

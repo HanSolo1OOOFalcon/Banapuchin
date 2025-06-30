@@ -25,7 +25,7 @@ namespace Banapuchin.Mods.Gun
 
         public override void Update()
         {
-            gun.Forever();
+            gun.Update();
             if (gun.IsFiring && !_wasFiring)
                 TeleportPatch.TeleportPlayer(gun.Hit.point, true);
             _wasFiring = gun.IsFiring;

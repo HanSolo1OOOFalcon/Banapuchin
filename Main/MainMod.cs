@@ -31,8 +31,8 @@ namespace Banapuchin.Main
             foreach (var type in monoTypes)
                 ClassInjector.RegisterTypeInIl2Cpp(type);
 
-            Caputilla.Caputilla.Instance.OnModdedJoin += OnModdedJoin;
-            Caputilla.Caputilla.Instance.OnModdedLeave += OnModdedLeave;
+            CaputillaMelonLoader.CaputillaHub.OnModdedJoin += OnModdedJoin;
+            CaputillaMelonLoader.CaputillaHub.OnModdedLeave += OnModdedLeave;
         }
 
         private static void Init()
@@ -84,8 +84,7 @@ namespace Banapuchin.Main
             pageR.AddComponent<IrregularButtonManager>().SpecialAction = () => IrregularButtonMethods.NextPage();
 
             // SUPER CUTE CAT IMAGES YAYAYAYAYAYAYAYAYAYAYAY
-            LoadImageInto3DWorldSpace("Banapuchin.Assets.Cats.MonkyCar.jpg", Menu.transform,
-                new Vector3(0f, 0.0019f, 0f), Quaternion.Euler(90f, 0f, 0f), Vector3.one * 0.01f);
+            LoadImageInto3DWorldSpace("Banapuchin.Assets.Cats.MonkyCar.jpg", Menu.transform, new Vector3(0f, 0.0019f, 0f), Quaternion.Euler(90f, 0f, 0f), Vector3.one * 0.01f);
 
             // butts (haha i said funneh word)
             var mods = Assembly.GetExecutingAssembly().GetTypes()

@@ -14,7 +14,7 @@
             <HintPath>$(GameAssemblyPath)\Assembly-CSharp.dll</HintPath>
         </Reference>
         <Reference Include="Caputilla">
-          <HintPath>..\..\..\..\..\..\..\..\Spel\Steam\steamapps\common\Capuchin\Mods\Caputilla\Caputilla.dll</HintPath>
+          <HintPath>$(ModsPath)\CaputillaMelonLoader\CaputillaMelonLoader.dll</HintPath>
         </Reference>
         <Reference Include="Il2CppAssistantCoreSDKRuntime">
             <HintPath>$(GameAssemblyPath)\Il2CppAssistantCoreSDKRuntime.dll</HintPath>

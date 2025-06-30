@@ -1,4 +1,5 @@
 using Banapuchin.Classes;
+using Banapuchin.Patches;
 using Il2Cpp;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Banapuchin.Mods.Multiplayer
         public override void OnEnable()
         {
             base.OnEnable();
+            FusionPlayerSpawnedPatch.ShouldESP = true;
             foreach (var thing in FusionHub.Instance.SpawnedPlayers)
             {
                 FusionPlayer player = thing.Item1;
@@ -25,6 +27,7 @@ namespace Banapuchin.Mods.Multiplayer
         public override void OnDisable()
         {
             base.OnDisable();
+            FusionPlayerSpawnedPatch.ShouldESP = false;
             foreach (var thing in FusionHub.Instance.SpawnedPlayers)
             {
                 FusionPlayer player = thing.Item1;
