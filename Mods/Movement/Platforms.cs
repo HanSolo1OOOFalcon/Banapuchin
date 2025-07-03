@@ -3,6 +3,8 @@ using UnityEngine;
 using Il2CppLocomotion;
 using Banapuchin.Classes;
 using Banapuchin.Libraries;
+using Il2CppFusion;
+using MelonLoader;
 
 namespace Banapuchin.Mods.Movement
 {

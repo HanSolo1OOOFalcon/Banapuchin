@@ -8,6 +8,7 @@ using UnityEngine;
 using Banapuchin.Extensions;
 using Banapuchin.Libraries;
 using Banapuchin.Mods.Movement;
+using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppLocomotion;
 using Il2CppTMPro;
@@ -25,10 +26,10 @@ namespace Banapuchin.Main
         public override void OnInitializeMelon()
         {
             ClassInjector.RegisterTypeInIl2Cpp(typeof(BetterMonoBehaviour));
-            var monoTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t =>
+            Type[] monoTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t =>
                 t.IsClass && !t.IsAbstract && typeof(BetterMonoBehaviour).IsAssignableFrom(t) &&
                 t != typeof(BetterMonoBehaviour)).ToArray();
-            foreach (var type in monoTypes)
+            foreach (Type type in monoTypes)
                 ClassInjector.RegisterTypeInIl2Cpp(type);
 
             CaputillaMelonLoader.CaputillaHub.OnModdedJoin += OnModdedJoin;
@@ -45,6 +46,8 @@ namespace Banapuchin.Main
 
             Bouncy.Normal = Player.Instance.climbDrag;
             UltraBouncy.Normal = Player.Instance.climbDrag;
+            
+            MelonLogger.Msg($"Latest version: {VersionChecker.GetLatestVersion() == ModInfo.VERSION}");
         }
 
         private static void CreateMenu()
@@ -214,7 +217,7 @@ namespace Banapuchin.Main
 
         public override void OnUpdate()
         {
-            if (!Allowed)
+            if (!Allowed || VersionChecker.GetLatestVersion() != ModInfo.VERSION)
                 return;
 
             if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.RightSecondaryButton))
@@ -247,7 +250,7 @@ namespace Banapuchin.Main
                 Init();
             }
 
-            if (!Allowed)
+            if (!Allowed || VersionChecker.GetLatestVersion() != ModInfo.VERSION)
                 return;
 
             foreach (Action action in ToInvokeFixed)

@@ -1,6 +1,10 @@
+using System.Text;
+using Banapuchin.Classes;
 using Banapuchin.Extensions;
 using HarmonyLib;
 using Il2Cpp;
+using Il2CppFusion;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using MelonLoader;
 using UnityEngine;
 
