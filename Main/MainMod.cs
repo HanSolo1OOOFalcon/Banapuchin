@@ -46,8 +46,6 @@ namespace Banapuchin.Main
 
             Bouncy.Normal = Player.Instance.climbDrag;
             UltraBouncy.Normal = Player.Instance.climbDrag;
-            
-            MelonLogger.Msg($"Latest version: {VersionChecker.GetLatestVersion() == ModInfo.VERSION}");
         }
 
         private static void CreateMenu()
@@ -128,8 +126,9 @@ namespace Banapuchin.Main
             ButtonManager buttonManager = button.AddComponent<ButtonManager>();
             buttonManager.ModInstance = instance;
 
+            string textToShow = VersionChecker.GetLatestVersion() == ModInfo.VERSION ? instance.Text : "UPDATE NEEDED";
             instance.ButtonObject = button;
-            CreateTextLabel(instance.Text, button.transform, new Vector3(0f, 0f, 0.007f),
+            CreateTextLabel(textToShow, button.transform, new Vector3(0f, 0f, 0.007f),
                 Quaternion.Euler(0f, 180f, 270f), 0.125f);
         }
 
@@ -217,7 +216,7 @@ namespace Banapuchin.Main
 
         public override void OnUpdate()
         {
-            if (!Allowed || VersionChecker.GetLatestVersion() != ModInfo.VERSION)
+            if (!Allowed)
                 return;
 
             if (ControllerInput.instance.GetInputDown(ControllerInput.InputType.RightSecondaryButton))
@@ -250,7 +249,7 @@ namespace Banapuchin.Main
                 Init();
             }
 
-            if (!Allowed || VersionChecker.GetLatestVersion() != ModInfo.VERSION)
+            if (!Allowed)
                 return;
 
             foreach (Action action in ToInvokeFixed)
