@@ -43,6 +43,8 @@ namespace Banapuchin.Main
             addComponentsToMe.AddComponent<ControllerInput>();
 
             bundle = LoadAssetBundle("Banapuchin.Assets.modmenu");
+            
+            MelonLogger.Msg($"Has correct Banapuchin version: {VersionChecker.GetLatestVersion() == ModInfo.VERSION}");
 
             Bouncy.Normal = Player.Instance.climbDrag;
             UltraBouncy.Normal = Player.Instance.climbDrag;

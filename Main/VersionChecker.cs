@@ -7,7 +7,7 @@ namespace Banapuchin.Main
             using (HttpClient httpClient = new HttpClient())
             {
                 var responseMessage = httpClient
-                    .GetAsync("https://raw.githubusercontent.com/HanSolo1OOOFalcon/Banapuchin/MelonLoader/VERSION.txt").Result;
+                    .GetAsync("https://raw.githubusercontent.com/HanSolo1000Falcon/Banapuchin/MelonLoader/VERSION.txt").Result;
                 responseMessage.EnsureSuccessStatusCode();
                 
                 using (Stream stream = responseMessage.Content.ReadAsStreamAsync().Result)
